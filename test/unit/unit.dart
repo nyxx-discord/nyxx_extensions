@@ -20,8 +20,8 @@ void main() async {
 
     expect(unicodeEmoji.code, equals(emojiDefinition.rawEmoji));
 
-    final filteredEmojis = await filterEmojiDefinitions((definition) => definition.rawEmoji.isEmpty);
-    expect(filteredEmojis, isEmpty);
+    final filteredEmojis = filterEmojiDefinitions((definition) => definition.rawEmoji.isEmpty);
+    expect(await filteredEmojis.toList(), isEmpty);
   });
 
   group("Embed Builder from Json", () {
