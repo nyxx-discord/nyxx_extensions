@@ -13,8 +13,8 @@ Future<RawApiMap> _downloadEmojiData() async {
 final Uri emojiDataUri = Uri.parse("https://static.emzi0767.com/misc/discordEmojiMap.json");
 
 /// Returns emoji based on given [predicate]. Allows to cache results via [cache] parameter.
-Future<EmojiDefinition> filterEmojiDefinitions(bool Function(EmojiDefinition) predicate, {bool cache = false}) async =>
-    getAllEmojiDefinitions(cache: cache).firstWhere(predicate);
+Stream<EmojiDefinition> filterEmojiDefinitions(bool Function(EmojiDefinition) predicate, {bool cache = false}) =>
+    getAllEmojiDefinitions(cache: cache).where(predicate);
 
 /// Returns all possible [EmojiDefinition]s. Allows to cache results via [cache] parameter.
 /// If emojis are cached it will resolve immediately with result.
