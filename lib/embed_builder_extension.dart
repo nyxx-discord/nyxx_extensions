@@ -1,1 +1,1 @@
-export "src/embedbuilder_extension.dart";
+export "src/embed_builder_extension.dart";

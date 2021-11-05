@@ -2,7 +2,7 @@ import "dart:async";
 
 import "package:nyxx/nyxx.dart" show TextGuildChannel, Message, Nyxx, Snowflake;
 
-import "Regexes.dart" show Regexes;
+import "regexes.dart" show Regexes;
 
 /// Possible types of tag handling for [MessageResolver]
 enum TagHandling {

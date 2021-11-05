@@ -7,9 +7,9 @@ extension MemberExtension on User {
   Future<Map<Guild, Member>> fetchMutualGuilds() async {
     final result = <Guild, Member>{};
 
-    for (final guild in this.client.guilds.values) {
+    for (final guild in client.guilds.values) {
       try {
-        final member = guild.members[this.id] ?? await guild.fetchMember(this.id);
+        final member = guild.members[id] ?? await guild.fetchMember(id);
 
         result[guild] = member;
         // ignore: empty_catches

@@ -9,10 +9,10 @@ extension DownloadAttachmentExtensions on Attachment {
   /// Downloads [Attachment] and saves to given [file].
   /// Returns modified file
   Future<File> downloadAsFile(File file) async {
-    final dataBytes = await this.downloadAsBytes();
+    final dataBytes = await downloadAsBytes();
     return file.writeAsBytes(dataBytes, mode: FileMode.writeOnly);
   }
 
   /// Downloads attachment as returns bytes of downloaded file.
-  Future<Uint8List> downloadAsBytes() async => (await http.get(Uri.parse(this.url))).bodyBytes;
+  Future<Uint8List> downloadAsBytes() async => (await http.get(Uri.parse(url))).bodyBytes;
 }
