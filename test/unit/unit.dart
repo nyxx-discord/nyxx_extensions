@@ -1,19 +1,27 @@
 import "dart:async";
 
 import "package:nyxx/nyxx.dart";
-import "package:nyxx_extensions/embedbuilder_extension.dart";
+import "package:nyxx_extensions/embed_builder_extension.dart";
 import "package:nyxx_extensions/emoji.dart";
 import "package:nyxx_extensions/src/utils.dart";
 import "package:test/expect.dart";
 import "package:test/scaffolding.dart";
 
 void main() async {
-  test("Basic tests", () async {
+  test("emoji tests", () async {
     final emojis = await getAllEmojiDefinitions(cache: true).toList();
     expect(emojis, isNotEmpty);
 
     final emojisFromCache = await getAllEmojiDefinitions().toList();
     expect(emojisFromCache, isNotEmpty);
+
+    final emojiDefinition = emojisFromCache.first;
+    final unicodeEmoji = emojiDefinition.toEmoji();
+
+    expect(unicodeEmoji.code, equals(emojiDefinition.rawEmoji));
+
+    final filteredEmojis = await filterEmojiDefinitions((definition) => definition.rawEmoji.isEmpty);
+    expect(filteredEmojis, isEmpty);
   });
 
   group("Embed Builder from Json", () {
@@ -43,11 +51,7 @@ void main() async {
 
     group("Embed Field Builder tests", () {
       test("with inline", () async {
-        final data = <String, dynamic>{
-          "name": "Example",
-          "value": "This is an example text",
-          "inline": true
-        };
+        final data = <String, dynamic>{"name": "Example", "value": "This is an example text", "inline": true};
         final field = EmbedFieldBuilder().importJson(data);
 
         expect(field.name, equals("Example"));
@@ -68,11 +72,7 @@ void main() async {
       });
 
       test("accept empty values", () async {
-        final data = <String, dynamic>{
-          "name": "Example",
-          "value": null,
-          "inline": true
-        };
+        final data = <String, dynamic>{"name": "Example", "value": null, "inline": true};
         final field = EmbedFieldBuilder().importJson(data);
 
         expect(field.name, isNotEmpty);
@@ -87,32 +87,13 @@ void main() async {
         "url": "https://discordapp.com",
         "color": 14515245,
         "timestamp": "2021-06-05T10:02:06.400Z",
-        "footer": {
-          "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
-          "text": "footer text"
-        },
-        "thumbnail": {
-          "url": "https://cdn.discordapp.com/embed/avatars/0.png"
-        },
-        "image": {
-          "url": "https://cdn.discordapp.com/embed/avatars/0.png"
-        },
-        "author": {
-          "name": "author name",
-          "url": "https://discordapp.com",
-          "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
-        },
+        "footer": {"icon_url": "https://cdn.discordapp.com/embed/avatars/0.png", "text": "footer text"},
+        "thumbnail": {"url": "https://cdn.discordapp.com/embed/avatars/0.png"},
+        "image": {"url": "https://cdn.discordapp.com/embed/avatars/0.png"},
+        "author": {"name": "author name", "url": "https://discordapp.com", "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"},
         "fields": [
-          {
-            "name": "🤔",
-            "value": "some of these properties have certain limits...",
-            "inline": false
-          },
-          {
-            "name": "<:thonkang:219069250692841473>",
-            "value": "are inline fields",
-            "inline": true
-          }
+          {"name": "🤔", "value": "some of these properties have certain limits...", "inline": false},
+          {"name": "<:thonkang:219069250692841473>", "value": "are inline fields", "inline": true}
         ]
       };
       final embed = EmbedBuilder().importJson(data);

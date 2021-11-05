@@ -1,7 +1,5 @@
 import "package:nyxx/nyxx.dart";
 
-typedef RawApiMap = Map<String, dynamic>;
-
 /// Collection of extensions for [EmbedFieldBuilder]
 extension EmbedFieldBuilderJson on EmbedFieldBuilder {
   /// Returns a [EmbedFieldBuilder] with data from the raw json
@@ -43,16 +41,12 @@ extension EmbedBuilderJson on EmbedBuilder {
     this.url = raw["url"] as String?;
     this.color = raw["color"] != null ? DiscordColor.fromInt(raw["color"] as int) : null;
     this.timestamp = raw["timestamp"] != null ? DateTime.parse(raw["timestamp"] as String) : null;
-    this.footer = raw["footer"] != null
-        ? EmbedFooterBuilder().importJson(raw["footer"] as Map<String, String?>)
-        : null;
+    this.footer = raw["footer"] != null ? EmbedFooterBuilder().importJson(raw["footer"] as Map<String, String?>) : null;
     this.imageUrl = raw["image"]["url"] as String?;
     this.thumbnailUrl = raw["thumbnail"]["url"] as String?;
-    this.author = raw["author"] != null
-        ? EmbedAuthorBuilder().importJson(raw["author"] as Map<String, String?>)
-        : null;
+    this.author = raw["author"] != null ? EmbedAuthorBuilder().importJson(raw["author"] as Map<String, String?>) : null;
 
-    for(final rawFields in raw["fields"] as List<dynamic>) {
+    for (final rawFields in raw["fields"] as List<dynamic>) {
       this.fields.add(EmbedFieldBuilder().importJson(rawFields as RawApiMap));
     }
 

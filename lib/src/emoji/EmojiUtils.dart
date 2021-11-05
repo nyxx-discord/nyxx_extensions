@@ -28,7 +28,7 @@ Stream<EmojiDefinition> getAllEmojiDefinitions({bool cache = false}) async* {
   for (final emojiDefinition in rawData["emojiDefinitions"]) {
     final definition = EmojiDefinition._new(emojiDefinition as RawApiMap);
 
-    if(cache) {
+    if (cache) {
       _emojisCache.add(definition);
     }
 
