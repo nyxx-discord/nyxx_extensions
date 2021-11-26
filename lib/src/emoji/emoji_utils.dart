@@ -10,7 +10,7 @@ Future<RawApiMap> _downloadEmojiData() async {
 }
 
 /// Emoji definitions uri
-final Uri emojiDataUri = Uri.parse("https://static.emzi0767.com/misc/discordEmojiMap.json");
+final Uri emojiDataUri = Uri.parse("https://emzi0767.gl-pages.emzi0767.dev/discord-emoji/discordEmojiMap.min.json");
 
 /// Returns emoji based on given [predicate]. Allows to cache results via [cache] parameter.
 Stream<EmojiDefinition> filterEmojiDefinitions(bool Function(EmojiDefinition) predicate, {bool cache = false}) =>
