@@ -39,17 +39,17 @@ extension MessageResolverExtension on Message {
       TagHandling everyoneTagHandling = TagHandling.sanitize,
       TagHandling channelTagHandling = TagHandling.sanitize,
       TagHandling emojiTagHandling = TagHandling.sanitize}) {
-    if (this.content.isEmpty) {
+    if (content.isEmpty) {
       return "";
     }
 
-    return MessageResolver(this.client as Nyxx,
+    return MessageResolver(client as Nyxx,
             userTagHandling: userTagHandling,
             roleTagHandling: roleTagHandling,
             everyoneTagHandling: everyoneTagHandling,
             channelTagHandling: channelTagHandling,
             emojiTagHandling: everyoneTagHandling)
-        .resolve(this.content);
+        .resolve(content);
   }
 }
 
@@ -119,31 +119,31 @@ class MessageResolver {
 
       final userMatch = Regexes.userMentionRegex.firstMatch(part);
       if (userMatch != null) {
-        outputBuffer.write(await this._resoleUserMention(userMatch, part));
+        outputBuffer.write(await _resoleUserMention(userMatch, part));
         continue;
       }
 
       final roleMatch = Regexes.roleMentionRegex.firstMatch(part);
       if (roleMatch != null) {
-        outputBuffer.write(await this._resolveRoleMention(roleMatch, part));
+        outputBuffer.write(await _resolveRoleMention(roleMatch, part));
         continue;
       }
 
       final everyoneMatch = Regexes.everyoneMentionRegex.firstMatch(part);
       if (everyoneMatch != null) {
-        outputBuffer.write(await this._resolveEveryone(everyoneMatch, part));
+        outputBuffer.write(await _resolveEveryone(everyoneMatch, part));
         continue;
       }
 
       final channelMatch = Regexes.channelMentionRegex.firstMatch(part);
       if (channelMatch != null) {
-        outputBuffer.write(await this._resolveChannel(channelMatch, part));
+        outputBuffer.write(await _resolveChannel(channelMatch, part));
         continue;
       }
 
       final emojiMatch = Regexes.emojiMentionRegex.firstMatch(part);
       if (emojiMatch != null) {
-        outputBuffer.write(await this._resolveEmoji(emojiMatch, part));
+        outputBuffer.write(await _resolveEmoji(emojiMatch, part));
         continue;
       }
 
@@ -194,11 +194,11 @@ class MessageResolver {
     final channel = _client.channels.values.firstWhere((ch) => ch is TextGuildChannel && ch.id == match.group(1)) as TextGuildChannel?;
 
     if (channelTagHandling == TagHandling.name || channelTagHandling == TagHandling.fullName) {
-      return channel != null ? "#${channel.name}" : this.missingEntityHandler("channel");
+      return channel != null ? "#${channel.name}" : missingEntityHandler("channel");
     }
 
     if (channelTagHandling == TagHandling.nameNoPrefix || channelTagHandling == TagHandling.fullNameNoPrefix) {
-      return channel != null ? channel.name : this.missingEntityHandler("channel");
+      return channel != null ? channel.name : missingEntityHandler("channel");
     }
 
     return content;
@@ -241,7 +241,7 @@ class MessageResolver {
         return role.name;
       }
     } on Exception {
-      return this.missingEntityHandler("role");
+      return missingEntityHandler("role");
     }
 
     return content;
@@ -263,19 +263,19 @@ class MessageResolver {
     final user = _client.users[Snowflake(match.group(1))];
 
     if (userTagHandling == TagHandling.name) {
-      return user != null ? "@${user.username}" : this.missingEntityHandler("user");
+      return user != null ? "@${user.username}" : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.nameNoPrefix) {
-      return user != null ? user.username : this.missingEntityHandler("user");
+      return user != null ? user.username : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.fullName) {
-      return user != null ? "@${user.tag}" : this.missingEntityHandler("user");
+      return user != null ? "@${user.tag}" : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.fullNameNoPrefix) {
-      return user != null ? "${user.tag}" : this.missingEntityHandler("user");
+      return user != null ? user.tag : missingEntityHandler("user");
     }
 
     return "";
