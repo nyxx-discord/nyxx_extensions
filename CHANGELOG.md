@@ -1,3 +1,8 @@
+## 3.0.0-dev.1
+__02.12.2021__
+
+- Use minified version of emojis endpoint. Fixes #1
+
 ## 3.0.0-dev.0
 __24.11.2021__
 
