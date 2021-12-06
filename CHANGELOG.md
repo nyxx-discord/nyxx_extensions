@@ -1,3 +1,8 @@
+## 3.0.0-dev.2
+__06.12.2021__
+
+- Add compatibility with nyxx 3.0.0-dev.x
+
 ## 3.0.0-dev.1
 __02.12.2021__
 
@@ -26,7 +31,7 @@ _25.04.2021_
 
 > **Release Candidate 2 for stable version. Requires dart sdk 2.12**
 
- - Added compatifility for nyxx 2.0.0-rc2
+ - Added compatibility for nyxx 2.0.0-rc2
  - Implemented mutual guilds extension method (9a8bb35)
 
 ## 1.0.0
