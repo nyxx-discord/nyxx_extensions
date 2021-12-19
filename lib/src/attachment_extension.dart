@@ -2,10 +2,10 @@ import "dart:io" show File, FileMode;
 import "dart:typed_data";
 
 import "package:http/http.dart" as http;
-import "package:nyxx/nyxx.dart" show Attachment;
+import "package:nyxx/nyxx.dart" show IAttachment;
 
 /// Extensions for downloading attachment
-extension DownloadAttachmentExtensions on Attachment {
+extension DownloadAttachmentExtensions on IAttachment {
   /// Downloads [Attachment] and saves to given [file].
   /// Returns modified file
   Future<File> downloadAsFile(File file) async {

@@ -1,3 +1,15 @@
+## 3.0.0
+__19.12.2021__
+
+- Create `lib/nyxx_extensions.dart` which exports all sub libraries
+- `filterEmojiDefinitions` from `emoji` library now returns `Stream<EmojiDefinition>`
+- Export library for each file
+- Use minified version of emojis endpoint. Fixes #1
+- Add compatibility with nyxx 3.0.0-dev.x****
+
+Other changes are initial implementation of unit and integration tests to assure correct behavior of internal framework
+processes. Also added `Makefile` with common commands that are run during development.
+
 ## 3.0.0-dev.2
 __06.12.2021__
 

@@ -97,7 +97,7 @@ void main() async {
         ]
       };
       final embed = EmbedBuilder().importJson(data);
-      expect(BuilderUtility.buildRawEmbed(embed), equals(data));
+      expect(embed.build(), equals(data));
     });
   });
 

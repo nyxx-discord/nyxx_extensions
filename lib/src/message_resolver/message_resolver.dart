@@ -1,6 +1,6 @@
 import "dart:async";
 
-import "package:nyxx/nyxx.dart" show TextGuildChannel, Message, Nyxx, Snowflake;
+import "package:nyxx/nyxx.dart" show IMessage, INyxx, ITextGuildChannel, Snowflake;
 
 import "regexes.dart" show Regexes;
 
@@ -29,7 +29,7 @@ enum TagHandling {
 }
 
 /// Extends [Message] class with [MessageResolver]
-extension MessageResolverExtension on Message {
+extension MessageResolverExtension on IMessage {
   /// Resolves raw message content to human readable string.
   /// Allows to set what to do with particular parts of message.
   /// Each mention, channel reference and emoji can be resolved by [TagHandling]
@@ -43,7 +43,7 @@ extension MessageResolverExtension on Message {
       return "";
     }
 
-    return MessageResolver(client as Nyxx,
+    return MessageResolver(client,
             userTagHandling: userTagHandling,
             roleTagHandling: roleTagHandling,
             everyoneTagHandling: everyoneTagHandling,
@@ -61,7 +61,7 @@ typedef MissingEntityHandler = FutureOr<String> Function(String entityType);
 /// Allows to set what to do with particular parts of message.
 /// Each mention, channel reference and emoji can be resolved by [TagHandling]
 class MessageResolver {
-  final Nyxx _client;
+  final INyxx _client;
   static const String _whiteSpaceCharacter = "‎";
 
   /// Handles resolving of user mentions
@@ -98,7 +98,7 @@ class MessageResolver {
   }
 
   /// Create message resolver with tag handlers set to [tagHandling].
-  factory MessageResolver.uniform(Nyxx client, TagHandling tagHandling) => MessageResolver(client,
+  factory MessageResolver.uniform(INyxx client, TagHandling tagHandling) => MessageResolver(client,
       userTagHandling: tagHandling,
       roleTagHandling: tagHandling,
       everyoneTagHandling: tagHandling,
@@ -191,7 +191,7 @@ class MessageResolver {
       return "<#$_whiteSpaceCharacter${match.group(1)}>";
     }
 
-    final channel = _client.channels.values.firstWhere((ch) => ch is TextGuildChannel && ch.id == match.group(1)) as TextGuildChannel?;
+    final channel = _client.channels.values.firstWhere((ch) => ch is ITextGuildChannel && ch.id == match.group(1)) as ITextGuildChannel?;
 
     if (channelTagHandling == TagHandling.name || channelTagHandling == TagHandling.fullName) {
       return channel != null ? "#${channel.name}" : missingEntityHandler("channel");
