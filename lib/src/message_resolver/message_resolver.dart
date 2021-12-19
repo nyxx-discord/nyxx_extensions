@@ -1,49 +1,55 @@
 import "dart:async";
 
-import "package:nyxx/nyxx.dart" show TextGuildChannel, Message, Nyxx, Snowflake;
+import "package:nyxx/nyxx.dart" show IMessage, INyxx, ITextGuildChannel, Snowflake;
 
-import "Regexes.dart" show Regexes;
+import "regexes.dart" show Regexes;
 
 /// Possible types of tag handling for [MessageResolver]
 enum TagHandling {
   /// Ignores tag handling completely - leaves content as is.
   ignore,
+
   /// Removes tag completely.
   remove,
+
   /// Returns name of tag, eg. `<@932489234> -> @l7ssha`
   name,
+
   /// Returns name of tag without mention prefix, eg. `<@932489234> -> l7ssha`
   nameNoPrefix,
+
   /// Returns name of the tag with full possible data, eg. `<@932489234> -> @l7ssha#6712`
   fullName,
+
   /// Returns name of the tag with full possible data without mention prefix, eg. `<@932489234> -> l7ssha#6712`
   fullNameNoPrefix,
+
   /// Sanitizes tag to form that client wont treat it as valid tag
   sanitize
 }
 
 /// Extends [Message] class with [MessageResolver]
-extension MessageResolverExtension on Message {
+extension MessageResolverExtension on IMessage {
   /// Resolves raw message content to human readable string.
   /// Allows to set what to do with particular parts of message.
   /// Each mention, channel reference and emoji can be resolved by [TagHandling]
-  FutureOr<String> resolveContent( {
-    TagHandling userTagHandling = TagHandling.sanitize,
-    TagHandling roleTagHandling = TagHandling.sanitize,
-    TagHandling everyoneTagHandling = TagHandling.sanitize,
-    TagHandling channelTagHandling = TagHandling.sanitize,
-    TagHandling emojiTagHandling = TagHandling.sanitize
-  }) {
-    if(this.content.isEmpty) {
+  FutureOr<String> resolveContent(
+      {TagHandling userTagHandling = TagHandling.sanitize,
+      TagHandling roleTagHandling = TagHandling.sanitize,
+      TagHandling everyoneTagHandling = TagHandling.sanitize,
+      TagHandling channelTagHandling = TagHandling.sanitize,
+      TagHandling emojiTagHandling = TagHandling.sanitize}) {
+    if (content.isEmpty) {
       return "";
     }
 
-    return MessageResolver(this.client as Nyxx,
-      userTagHandling: userTagHandling,
-      roleTagHandling: roleTagHandling,
-      everyoneTagHandling: everyoneTagHandling,
-      channelTagHandling: channelTagHandling,
-      emojiTagHandling: everyoneTagHandling).resolve(this.content);
+    return MessageResolver(client,
+            userTagHandling: userTagHandling,
+            roleTagHandling: roleTagHandling,
+            everyoneTagHandling: everyoneTagHandling,
+            channelTagHandling: channelTagHandling,
+            emojiTagHandling: everyoneTagHandling)
+        .resolve(content);
   }
 }
 
@@ -55,7 +61,7 @@ typedef MissingEntityHandler = FutureOr<String> Function(String entityType);
 /// Allows to set what to do with particular parts of message.
 /// Each mention, channel reference and emoji can be resolved by [TagHandling]
 class MessageResolver {
-  final Nyxx _client;
+  final INyxx _client;
   static const String _whiteSpaceCharacter = "‎";
 
   /// Handles resolving of user mentions
@@ -77,14 +83,13 @@ class MessageResolver {
   late final MissingEntityHandler missingEntityHandler;
 
   /// Create message resolver with given options
-  MessageResolver(this._client, {
-    this.userTagHandling = TagHandling.sanitize,
-    this.roleTagHandling = TagHandling.sanitize,
-    this.everyoneTagHandling = TagHandling.sanitize,
-    this.channelTagHandling = TagHandling.sanitize,
-    this.emojiTagHandling = TagHandling.sanitize,
-    MissingEntityHandler? missingEntityHandler
-  }) {
+  MessageResolver(this._client,
+      {this.userTagHandling = TagHandling.sanitize,
+      this.roleTagHandling = TagHandling.sanitize,
+      this.everyoneTagHandling = TagHandling.sanitize,
+      this.channelTagHandling = TagHandling.sanitize,
+      this.emojiTagHandling = TagHandling.sanitize,
+      MissingEntityHandler? missingEntityHandler}) {
     if (missingEntityHandler == null) {
       this.missingEntityHandler = _defaultMissingEntityHandler;
     } else {
@@ -93,14 +98,12 @@ class MessageResolver {
   }
 
   /// Create message resolver with tag handlers set to [tagHandling].
-  factory MessageResolver.uniform(Nyxx client, TagHandling tagHandling) =>
-      MessageResolver(client,
-        userTagHandling: tagHandling,
-        roleTagHandling: tagHandling,
-        everyoneTagHandling: tagHandling,
-        channelTagHandling: tagHandling,
-        emojiTagHandling: tagHandling
-    );
+  factory MessageResolver.uniform(INyxx client, TagHandling tagHandling) => MessageResolver(client,
+      userTagHandling: tagHandling,
+      roleTagHandling: tagHandling,
+      everyoneTagHandling: tagHandling,
+      channelTagHandling: tagHandling,
+      emojiTagHandling: tagHandling);
 
   /// Resolves raw [messageContent] into human readable form.
   Future<String> resolve(String messageContent) async {
@@ -111,36 +114,36 @@ class MessageResolver {
     final messageParts = messageContent.split(" ");
     final outputBuffer = StringBuffer();
 
-    for(final part in messageParts) {
+    for (final part in messageParts) {
       outputBuffer.write(" ");
 
       final userMatch = Regexes.userMentionRegex.firstMatch(part);
       if (userMatch != null) {
-        outputBuffer.write(await this._resoleUserMention(userMatch, part));
+        outputBuffer.write(await _resoleUserMention(userMatch, part));
         continue;
       }
 
       final roleMatch = Regexes.roleMentionRegex.firstMatch(part);
       if (roleMatch != null) {
-        outputBuffer.write(await this._resolveRoleMention(roleMatch, part));
+        outputBuffer.write(await _resolveRoleMention(roleMatch, part));
         continue;
       }
 
       final everyoneMatch = Regexes.everyoneMentionRegex.firstMatch(part);
       if (everyoneMatch != null) {
-        outputBuffer.write(await this._resolveEveryone(everyoneMatch, part));
+        outputBuffer.write(await _resolveEveryone(everyoneMatch, part));
         continue;
       }
 
       final channelMatch = Regexes.channelMentionRegex.firstMatch(part);
       if (channelMatch != null) {
-        outputBuffer.write(await this._resolveChannel(channelMatch, part));
+        outputBuffer.write(await _resolveChannel(channelMatch, part));
         continue;
       }
 
       final emojiMatch = Regexes.emojiMentionRegex.firstMatch(part);
       if (emojiMatch != null) {
-        outputBuffer.write(await this._resolveEmoji(emojiMatch, part));
+        outputBuffer.write(await _resolveEmoji(emojiMatch, part));
         continue;
       }
 
@@ -188,14 +191,14 @@ class MessageResolver {
       return "<#$_whiteSpaceCharacter${match.group(1)}>";
     }
 
-    final channel = _client.channels.values.firstWhere((ch) => ch is TextGuildChannel && ch.id == match.group(1)) as TextGuildChannel?;
+    final channel = _client.channels.values.firstWhere((ch) => ch is ITextGuildChannel && ch.id == match.group(1)) as ITextGuildChannel?;
 
     if (channelTagHandling == TagHandling.name || channelTagHandling == TagHandling.fullName) {
-      return channel != null ? "#${channel.name}" : this.missingEntityHandler("channel");
+      return channel != null ? "#${channel.name}" : missingEntityHandler("channel");
     }
 
     if (channelTagHandling == TagHandling.nameNoPrefix || channelTagHandling == TagHandling.fullNameNoPrefix) {
-      return channel != null ? channel.name : this.missingEntityHandler("channel");
+      return channel != null ? channel.name : missingEntityHandler("channel");
     }
 
     return content;
@@ -227,10 +230,8 @@ class MessageResolver {
     }
 
     try {
-      final role = _client.guilds.values
-          .map((e) => e.roles.values)
-          .expand((element) => element)
-          .firstWhere((element) => element.id == Snowflake(match.group(1)));
+      final role =
+          _client.guilds.values.map((e) => e.roles.values).expand((element) => element).firstWhere((element) => element.id == Snowflake(match.group(1)));
 
       if (roleTagHandling == TagHandling.name || roleTagHandling == TagHandling.fullName) {
         return "@${role.name}";
@@ -240,7 +241,7 @@ class MessageResolver {
         return role.name;
       }
     } on Exception {
-      return this.missingEntityHandler("role");
+      return missingEntityHandler("role");
     }
 
     return content;
@@ -262,19 +263,19 @@ class MessageResolver {
     final user = _client.users[Snowflake(match.group(1))];
 
     if (userTagHandling == TagHandling.name) {
-      return user != null ? "@${user.username}" : this.missingEntityHandler("user");
+      return user != null ? "@${user.username}" : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.nameNoPrefix) {
-      return user != null ? user.username : this.missingEntityHandler("user");
+      return user != null ? user.username : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.fullName) {
-      return user != null ? "@${user.tag}" : this.missingEntityHandler("user");
+      return user != null ? "@${user.tag}" : missingEntityHandler("user");
     }
 
     if (userTagHandling == TagHandling.fullNameNoPrefix) {
-      return user != null ? "${user.tag}" : this.missingEntityHandler("user");
+      return user != null ? user.tag : missingEntityHandler("user");
     }
 
     return "";

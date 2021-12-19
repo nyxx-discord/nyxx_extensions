@@ -1,5 +1,5 @@
 name: nyxx_extensions
-version: 2.0.0
+version: 3.0.0
 description: Nyxx Extensions Module. Discord library for Dart. Simple, robust framework for creating discord bots for Dart language.
 homepage: https://github.com/nyxx-discord/nyxx
 repository: https://github.com/nyxx-discord/nyxx
@@ -10,8 +10,10 @@ environment:
   sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
-  http: "^0.13.3"
-  nyxx: "^2.0.0"
+  http: ^0.13.3
+  nyxx: ^3.0.0
 
 dev_dependencies:
-  test: "^1.17.0"
+  coverage: ^1.0.3
+  lints: ^1.0.1
+  test: ^1.17.0
