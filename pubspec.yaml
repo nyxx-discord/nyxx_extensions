@@ -11,7 +11,7 @@ environment:
 
 dependencies:
   http: ^0.13.3
-  nyxx: ^3.0.0
+  nyxx: ^4.2.0
 
 dev_dependencies:
   coverage: ^1.0.3
