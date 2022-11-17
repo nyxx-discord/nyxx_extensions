@@ -1,5 +1,6 @@
 ## 3.1.0
 __15.11.2022__
+
 - Bump nyxx to `4.2.0`
 - Add an `acronym` property on guild
 
