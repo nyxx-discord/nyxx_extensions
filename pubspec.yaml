@@ -11,9 +11,9 @@ environment:
 
 dependencies:
   http: ^0.13.3
-  nyxx: ^4.2.0
+  nyxx: ^5.0.0
 
 dev_dependencies:
   coverage: ^1.0.3
-  lints: ^1.0.1
+  lints: ^2.0.1
   test: ^1.17.0
