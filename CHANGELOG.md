@@ -1,3 +1,8 @@
+## 3.2.0
+
+- Bump nyxx to `4.2.0`
+- Correctly export `acronym` property on guild
+
 ## 3.1.0
 __15.11.2022__
 
