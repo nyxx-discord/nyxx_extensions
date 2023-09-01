@@ -1,4 +1,4 @@
-part of emoji;
+import 'package:nyxx/nyxx.dart';
 
 /// Wrapper class around discords emojis data
 class EmojiDefinition {
@@ -20,7 +20,7 @@ class EmojiDefinition {
   /// Url of emoji picture
   late final String assetUrl;
 
-  EmojiDefinition._new(RawApiMap raw) {
+  EmojiDefinition(RawApiMap raw) {
     primaryName = raw["primaryName"] as String;
     names = (raw["names"] as Iterable<dynamic>).cast();
     rawEmoji = raw["surrogates"] as String;

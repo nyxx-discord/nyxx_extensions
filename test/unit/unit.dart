@@ -1,9 +1,7 @@
 import "dart:async";
 
 import "package:nyxx/nyxx.dart";
-import "package:nyxx_extensions/embed_builder_extension.dart";
-import "package:nyxx_extensions/emoji.dart";
-import "package:nyxx_extensions/src/utils.dart";
+import "package:nyxx_extensions/nyxx_extensions.dart";
 import "package:test/expect.dart";
 import "package:test/scaffolding.dart";
 

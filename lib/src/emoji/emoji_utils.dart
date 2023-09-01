@@ -1,4 +1,9 @@
-part of emoji;
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+import 'package:nyxx/nyxx.dart';
+import 'package:nyxx_extensions/nyxx_extensions.dart';
 
 List<EmojiDefinition> _emojisCache = [];
 
@@ -26,7 +31,7 @@ Stream<EmojiDefinition> getAllEmojiDefinitions({bool cache = false}) async* {
   final rawData = await _downloadEmojiData();
 
   for (final emojiDefinition in rawData["emojiDefinitions"]) {
-    final definition = EmojiDefinition._new(emojiDefinition as RawApiMap);
+    final definition = EmojiDefinition(emojiDefinition as RawApiMap);
 
     if (cache) {
       _emojisCache.add(definition);
