@@ -88,9 +88,9 @@ Future<List<EmojiDefinition>> getEmojiDefinitions() async {
       for (final raw in data)
         EmojiDefinition(
           primaryName: raw['primaryName'] as String,
-          names: parseMany(raw['names']),
+          names: parseMany(raw['names'] as List),
           surrogates: raw['surrogates'] as String,
-          utf32Codepoints: parseMany(raw['utf32codepoints']),
+          utf32Codepoints: parseMany(raw['utf32codepoints'] as List),
           assetFilename: raw['assetFileName'] as String,
           assetUrl: Uri.parse(raw['assetUrl']),
           category: raw['category'] as String,
