@@ -6,7 +6,6 @@ linter:
     implementation_imports: false
 
 analyzer:
-  exclude: [build/**, example/**]
   language:
     strict-raw-types: true
   strong-mode:

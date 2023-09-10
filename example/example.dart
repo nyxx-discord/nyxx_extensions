@@ -1,28 +1,30 @@
+import "dart:io";
+
 import "package:nyxx/nyxx.dart";
-import "package:nyxx_extensions/emoji.dart" as emoji_extension;
-import "package:nyxx_extensions/src/message_resolver/message_resolver.dart" as message_resolver_extension;
+import "package:nyxx_extensions/nyxx_extensions.dart";
 
-// nyxx.extensions contains several different extensions
-// that could simplify making and implementing bots.
 void main() async {
-  // Emoji extension would allow to download and fetch discord emoji definitions
-  // from resource shared by Emzi.
-  // Emoji utils can cache results to do not download json document each time
-  final allEmojis = emoji_extension.getAllEmojiDefinitions();
+  final client = await Nyxx.connectGateway(Platform.environment['TOKEN']!, GatewayIntents.guildMessages | GatewayIntents.messageContent);
 
-  // Its also possible to filter the emojis based on predicate
-  final filteredEmojis = emoji_extension.filterEmojiDefinitions(
-          (emojiDefinition) => emojiDefinition.primaryName.startsWith("smile")
-  );
+  // Get an emoji by its unicode character...
+  final heartEmoji = client.getTextEmoji('❤️');
 
-  // Needed for next extension
-  final bot = Nyxx("token", GatewayIntents.allUnprivileged);
+  // ...or list all available emojis
+  final allEmojis = await client.getTextEmojis();
+  print('There are currently ${allEmojis.length} emojis!');
 
-  // Message Resolver extension allows to transform raw string message content
-  // to format that user is seeing
-  final messageResolver = message_resolver_extension.MessageResolver(bot);
+  // Get information about a text emoji!
+  final heartEmojiInformation = await heartEmoji.getDefinition();
+  print('The primary name of ${heartEmojiInformation.surrogates} is ${heartEmojiInformation.primaryName}');
 
-  // resolve method will return message according to set handling settings in
-  // MessageResolver constructor.
-  final resolvedMessage = messageResolver.resolve("This is raw content. <!@123>");
+  // Sanitizing content makes it safe to send to Discord without triggering any mentions
+  client.onMessageCreate.listen((event) async {
+    if (event.message.content.startsWith('!sanitize')) {
+      event.message.channel.sendMessage(MessageBuilder(
+        content: 'Sanitized content: ${await sanitizeContent(event.message.content, channel: event.message.channel)}',
+      ));
+    }
+  });
+
+  // ...and more!
 }
