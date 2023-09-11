@@ -81,7 +81,7 @@ Future<List<EmojiDefinition>> getEmojiDefinitions() async {
     return _cachedEmojiDefinitions!;
   } else {
     final response = await http.get(_emojiDefinitionsUrl);
-    final data = jsonDecode(response.body)['emojiDefinitions'];
+    final data = jsonDecode(utf8.decode(response.bodyBytes))['emojiDefinitions'];
 
     _cachedAt = DateTime.timestamp();
     return _cachedEmojiDefinitions = [
