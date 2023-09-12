@@ -3,5 +3,5 @@ import 'package:nyxx_extensions/src/channel.dart';
 
 extension MessageUtils on Message {
   /// A URL clients can visit to navigate to this message.
-  Uri get url => Uri.https(manager.client.apiOptions.host, '${channel.url.path}/$id');
+  Future<Uri> get url async => Uri.https(manager.client.apiOptions.host, '${(await channel.get()).url.path}/$id');
 }
