@@ -1,4 +1,5 @@
 import "package:nyxx/nyxx.dart";
+import "package:nyxx_extensions/src/utils/formatters.dart";
 
 extension UserExtension on PartialUser {
   /// Fetch all the mutual guilds the client shares with this user.
@@ -19,4 +20,10 @@ extension UserExtension on PartialUser {
 
     return result;
   }
+
+  /// A URL clients can visit to open the user's profile.
+  Uri get url => Uri.https(manager.client.apiOptions.host, '/users/$id');
+
+  /// A mention of this user.
+  String get mention => userMention(id);
 }
