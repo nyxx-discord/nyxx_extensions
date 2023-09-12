@@ -7,5 +7,5 @@ extension GuildExtension on Guild {
   }
 
   /// A URL clients can visit to navigate to this guild.
-  Uri get url => Uri.https(manager.client.apiOptions.host, '/channels/$id');
+  Uri get url => Uri.https(manager.client.apiOptions.host, '/guilds/$id');
 }
