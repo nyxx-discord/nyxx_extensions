@@ -13,8 +13,7 @@ void main() {
           '''
 ```dart
 $testContent
-```
-''',
+```''',
         ),
       ),
     );
