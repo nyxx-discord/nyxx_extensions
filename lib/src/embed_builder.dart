@@ -20,8 +20,7 @@ extension EmbedExtension on Embed {
 extension on EmbedAuthor? {
   EmbedAuthorBuilder? _toEmbedAuthorBuilder() {
     return switch (this) {
-      EmbedAuthor(:final name, :final iconUrl?, :final url?) =>
-        EmbedAuthorBuilder(
+      EmbedAuthor(:final name, :final iconUrl?, :final url?) => EmbedAuthorBuilder(
           name: name,
           iconUrl: iconUrl,
           url: url,
@@ -32,8 +31,7 @@ extension on EmbedAuthor? {
 }
 
 extension on EmbedField {
-  EmbedFieldBuilder _toEmbedFieldBuilder() =>
-      EmbedFieldBuilder(name: name, value: value, isInline: inline);
+  EmbedFieldBuilder _toEmbedFieldBuilder() => EmbedFieldBuilder(name: name, value: value, isInline: inline);
 }
 
 extension on EmbedFooter? {
