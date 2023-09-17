@@ -109,7 +109,7 @@ final pagination = Pagination(PaginationOptions());
 /// A plugin that adds support for pagination to nyxx clients.
 ///
 /// This plugin must be registered to all client making use of the pagination features.
-class Pagination extends NyxxPlugin {
+class Pagination extends NyxxPlugin<NyxxGateway> {
   @override
   String get name => 'Pagination';
 
@@ -151,13 +151,7 @@ class Pagination extends NyxxPlugin {
   }
 
   @override
-  Future<ClientType> connect<ClientType extends Nyxx>(ApiOptions apiOptions, ClientOptions clientOptions, Future<ClientType> Function() connect) async {
-    final client = await connect();
-
-    if (client is! NyxxGateway) {
-      throw NyxxException('Pagination requires NyxxGateway');
-    }
-
+  void afterConnect(NyxxGateway client) async {
     client.onMessageComponentInteraction.listen((event) async {
       final interaction = event.interaction;
       final data = interaction.data;
@@ -224,15 +218,13 @@ class Pagination extends NyxxPlugin {
         break;
       }
     });
-
-    return client;
   }
 
   @override
-  Future<void> close(Nyxx client, Future<void> Function() close) async {
+  Future<void> beforeClose(NyxxGateway client) async {
     final clientStates = _clientStates.remove(client);
     if (clientStates != null) {
-      for (final state in clientStates) {
+      await Future.wait(clientStates.map((state) async {
         _unregisterPagination(state);
 
         state.disableTimer?.cancel();
@@ -243,10 +235,8 @@ class Pagination extends NyxxPlugin {
             await state.builderForIndex(state.currentIndex),
           ));
         }
-      }
+      }));
     }
-
-    await close();
   }
 
   /// Create a [MessageBuilder] for a paginated message created by a list of builder factories.
