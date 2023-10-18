@@ -28,7 +28,7 @@ String quoteBlock(String content) => '>>> $content';
 String hideEmbed(String url) => '<$url>';
 
 /// Format the [content] and the URL into a hyperlink (aka [Markdown link](https://www.markdownguide.org/basic-syntax/#links)), and optionally, add a [title] that will be displayed on hover.
-String hyperlink(String content, String url, [String? title]) => '[$content](<$url${title != null ? ' "$title"' : ''}>)';
+String hyperlink(String content, String url, [String? title]) => '[$content](<$url>${title != null ? ' "$title"' : ''})';
 
 /// Wraps the [content] inside `||`.
 String spoiler(String content) => '||$content||';
