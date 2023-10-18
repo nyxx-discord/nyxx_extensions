@@ -86,7 +86,7 @@ $testContent
       'Hyperlink',
       () => expect(
         hyperlink(testContent, 'https://example.com', 'Example'),
-        equals('[$testContent](<https://example.com "Example">)'),
+        equals('[$testContent](<https://example.com> "Example")'),
       ),
     );
 
