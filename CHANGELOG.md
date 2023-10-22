@@ -1,3 +1,13 @@
+## 4.0.0
+__20.10.2023__
+- Fixed an issue with link formatting.
+
+## 4.0.0-dev.1
+__17.09.2023__
+- Bump nyxx to `6.0.0`. See the changelog at https://pub.dev/packages/nyxx for more information.
+- Removed helpers now in the nyxx package.
+- Added pagination support.
+
 ## 3.2.0
 
 - Bump nyxx to `4.2.0`
