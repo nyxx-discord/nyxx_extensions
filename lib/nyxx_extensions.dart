@@ -1,9 +1,13 @@
 library nyxx_extensions;
 
-export 'attachment_extension.dart';
-export 'embed_builder_extension.dart';
-export 'emoji.dart';
-export 'member_extension.dart';
-export 'message_resolver.dart';
-export 'utils.dart';
-export 'guild_extension.dart';
+export 'src/channel.dart';
+export 'src/date_time.dart';
+export 'src/embed_builder.dart';
+export 'src/emoji.dart';
+export 'src/guild.dart';
+export 'src/message.dart';
+export 'src/pagination.dart';
+export 'src/role.dart';
+export 'src/sanitizer.dart';
+export 'src/user.dart';
+export 'src/utils/formatters.dart';
