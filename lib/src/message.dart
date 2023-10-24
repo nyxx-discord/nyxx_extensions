@@ -5,9 +5,7 @@ extension MessageUtils on Message {
   /// A URL clients can visit to navigate to this message.
   Future<Uri> get url async => Uri.https(manager.client.apiOptions.host, '${(await channel.get()).url.path}/$id');
 
-  /**
-   * Sends a reply to the message,
-   */
+  /// Sends a reply to the message,
   Future<Message> sendReply(MessageBuilder builder) {
     final copiedBuilder = MessageBuilder(
         allowedMentions: builder.allowedMentions,
@@ -16,7 +14,7 @@ extension MessageUtils on Message {
         content: builder.content,
         embeds: builder.embeds,
         nonce: builder.nonce,
-        replyId: this.id,
+        replyId: id,
         requireReplyToExist: builder.requireReplyToExist,
         stickerIds: builder.stickerIds,
         suppressEmbeds: builder.suppressEmbeds,
@@ -24,6 +22,6 @@ extension MessageUtils on Message {
         tts: builder.tts,
     );
 
-    return this.channel.sendMessage(copiedBuilder);
+    return channel.sendMessage(copiedBuilder);
   }
 }
