@@ -8,18 +8,18 @@ extension MessageUtils on Message {
   /// Sends a reply to the message.
   Future<Message> sendReply(MessageBuilder builder) {
     final copiedBuilder = MessageBuilder(
-        allowedMentions: builder.allowedMentions,
-        attachments: builder.attachments,
-        components: builder.components,
-        content: builder.content,
-        embeds: builder.embeds,
-        nonce: builder.nonce,
-        replyId: id,
-        requireReplyToExist: builder.requireReplyToExist,
-        stickerIds: builder.stickerIds,
-        suppressEmbeds: builder.suppressEmbeds,
-        suppressNotifications: builder.suppressNotifications,
-        tts: builder.tts,
+      allowedMentions: builder.allowedMentions,
+      attachments: builder.attachments,
+      components: builder.components,
+      content: builder.content,
+      embeds: builder.embeds,
+      nonce: builder.nonce,
+      replyId: id,
+      requireReplyToExist: builder.requireReplyToExist,
+      stickerIds: builder.stickerIds,
+      suppressEmbeds: builder.suppressEmbeds,
+      suppressNotifications: builder.suppressNotifications,
+      tts: builder.tts,
     );
 
     return channel.sendMessage(copiedBuilder);
