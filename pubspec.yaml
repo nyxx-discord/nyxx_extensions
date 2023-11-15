@@ -1,5 +1,5 @@
 name: nyxx_extensions
-version: 4.0.0
+version: 4.1.0
 description: Extensions to the Discord API provided in nyxx, including pagination support and message sanitization.
 repository: https://github.com/nyxx-discord/nyxx_extensions
 documentation: https://nyxx.l7ssha.xyz

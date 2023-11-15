@@ -1,3 +1,8 @@
+## 4.1.0
+__15.11.2023__
+- Added a helper to reply to a message.
+- Fixed an issue with paginating back to a page that had already been seen.
+
 ## 4.0.0
 __20.10.2023__
 - Fixed an issue with link formatting.
