@@ -5,7 +5,7 @@ import 'package:nyxx_extensions/nyxx_extensions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final testToken = Platform.environment['TOKEN']!;
+  final testToken = Platform.environment['TEST_TOKEN']!;
   final testChannelId = Snowflake.parse(Platform.environment['TEST_TEXT_CHANNEL']!);
 
   group('streaming endpoint pagination', () {
