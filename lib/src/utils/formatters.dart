@@ -58,5 +58,9 @@ enum TimestampStyle {
 
   /// The style of the timestamp.
   final String style;
+
   const TimestampStyle(this.style);
+
+  /// Format [date] using this timestamp style.
+  String format(DateTime date) => formatDate(date, this);
 }
