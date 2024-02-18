@@ -12,3 +12,4 @@ export 'src/sanitizer.dart';
 export 'src/user.dart';
 export 'src/utils/formatters.dart';
 export 'src/permissions.dart';
+export 'src/endpoint_paginator.dart';
