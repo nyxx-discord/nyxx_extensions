@@ -42,7 +42,9 @@ Stream<T> _streamPaginatedEndpoint<T>(
       StreamOrder.oldestFirst => fetchPage(limit: pageSize, after: nextPageAfter),
     };
 
-    if (page.isEmpty) break;
+    if (page.isEmpty) {
+      break;
+    }
 
     final pageWithIds = [
       for (final entity in page) (id: extractId(entity), entity: entity),
@@ -63,7 +65,9 @@ Stream<T> _streamPaginatedEndpoint<T>(
     }
 
     for (final (:id, :entity) in pageWithIds) {
-      if (id.isBefore(before) && id.isAfter(after)) yield entity;
+      if (id.isBefore(before) && id.isAfter(after)) {
+        yield entity;
+      }
     }
 
     if (order == StreamOrder.oldestFirst) {
@@ -74,8 +78,12 @@ Stream<T> _streamPaginatedEndpoint<T>(
 
     // The extra == check isn't strictly necessary, but it saves us an API call
     // in the common case of setting `before` or `after` to an entity's ID.
-    if (nextPageAfter.isAfter(before) || nextPageAfter == before) break;
-    if (nextPageBefore.isBefore(after) || nextPageBefore == after) break;
+    if (nextPageAfter.isAfter(before) || nextPageAfter == before) {
+      break;
+    }
+    if (nextPageBefore.isBefore(after) || nextPageBefore == after) {
+      break;
+    }
   }
 }
 
