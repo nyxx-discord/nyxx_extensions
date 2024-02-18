@@ -61,6 +61,7 @@ jobs:
     env:
       TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
       TEST_GUILD: ${{ secrets.TEST_GUILD }}
+      TEST_TEXT_CHANNEL: ${{ secrets.TEST_TEXT_CHANNEL }}
     steps:
       - name: Setup Dart Action
         uses: dart-lang/setup-dart@v1
