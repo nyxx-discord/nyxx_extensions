@@ -1,7 +1,8 @@
-import "package:nyxx/nyxx.dart";
-import "package:nyxx_extensions/src/utils/formatters.dart";
+import 'package:nyxx/nyxx.dart';
+import 'package:nyxx_extensions/src/utils/formatters.dart';
 
-extension UserExtension on PartialUser {
+/// Extensions on [PartialUser].
+extension PartialUserExtensions on PartialUser {
   /// Fetch all the mutual guilds the client shares with this user.
   ///
   /// Returns a mapping of the guilds the client and this user share mapped to this user's member in each guild.

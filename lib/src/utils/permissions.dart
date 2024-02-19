@@ -77,19 +77,3 @@ Future<Permissions> computePermissions(
 
   return computeOverwrites(await computeBasePermissions());
 }
-
-/// Extensions for computing permissions in a [GuildChannel].
-extension MemberComputePermissions on PartialMember {
-  /// Compute this member's permissions in [channel].
-  ///
-  /// {@macro compute_permissions_detail}
-  Future<Permissions> computePermissionsIn(GuildChannel channel) async => await computePermissions(channel, await get());
-}
-
-/// Extensions for computing a [Member]'s permissions.
-extension ChannelComputePermissions on GuildChannel {
-  /// Compute [member]'s permissions in this channel.
-  ///
-  /// {@macro compute_permissions_detail}
-  Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
-}

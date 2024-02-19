@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:nyxx/nyxx.dart';
 
 import 'package:nyxx/src/utils/to_string_helper/to_string_helper.dart';
 import 'package:nyxx/src/utils/parsing_helpers.dart';
@@ -49,24 +48,6 @@ class EmojiDefinition with ToStringHelper {
     required this.alternateSurrogates,
     required this.alternateUtf32Codepoints,
   });
-}
-
-/// Extensions relating to [EmojiDefinition]s on [TextEmoji].
-extension TextEmojiDefinition on TextEmoji {
-  /// Get the definition of this emoji.
-  Future<EmojiDefinition> getDefinition() async =>
-      (await getEmojiDefinitions()).singleWhere((definition) => definition.surrogates == name || definition.alternateSurrogates == name);
-}
-
-/// Extensions relating to [EmojiDefinition]s on [NyxxRest].
-extension NyxxEmojiDefinitions on NyxxRest {
-  /// List all the text emoji available to this client.
-  Future<List<TextEmoji>> getTextEmojis() async => (await getEmojiDefinitions())
-      .map((definition) => TextEmoji(id: Snowflake.zero, manager: guilds[Snowflake.zero].emojis, name: definition.surrogates))
-      .toList();
-
-  /// Get a text emoji by name.
-  TextEmoji getTextEmoji(String name) => TextEmoji(id: Snowflake.zero, manager: guilds[Snowflake.zero].emojis, name: name);
 }
 
 final _emojiDefinitionsUrl = Uri.parse("https://emzi0767.gl-pages.emzi0767.dev/discord-emoji/discordEmojiMap.min.json");

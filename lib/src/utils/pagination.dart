@@ -108,7 +108,7 @@ final pagination = Pagination(PaginationOptions());
 
 /// A plugin that adds support for pagination to nyxx clients.
 ///
-/// This plugin must be registered to all client making use of the pagination features.
+/// This plugin must be registered to all clients making use of the pagination features.
 class Pagination extends NyxxPlugin<NyxxGateway> {
   @override
   String get name => 'Pagination';

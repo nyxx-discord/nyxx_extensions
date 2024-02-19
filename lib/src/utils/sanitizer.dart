@@ -1,14 +1,5 @@
 import "package:nyxx/nyxx.dart";
-
-extension<T extends SnowflakeEntity<T>> on SnowflakeEntity<T> {
-  Future<T?> getOrNull() async {
-    try {
-      return await get();
-    } on Exception {
-      return null;
-    }
-  }
-}
+import "package:nyxx_extensions/src/extensions/snowflake_entity.dart";
 
 const _whitespaceCharacter = "‎";
 
