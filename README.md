@@ -1,56 +1,40 @@
 # nyxx_extensions
 
-[![Discord Shield](https://discordapp.com/api/guilds/846136758470443069/widget.png?style=shield)](https://discord.gg/nyxx)
-[![pub](https://img.shields.io/pub/v/nyxx.svg)](https://pub.dartlang.org/packages/nyxx_extensions)
-[![documentation](https://img.shields.io/badge/Documentation-nyxx_interactions-yellow.svg)](https://www.dartdocs.org/documentation/nyxx_extensions/latest/)
+[![Discord](https://discordapp.com/api/guilds/846136758470443069/widget.png?style=shield)](https://discord.gg/nyxx)
+[![pub](https://img.shields.io/pub/v/nyxx_extensions.svg)](https://pub.dev/packages/nyxx_extensions)
+[![documentation](https://img.shields.io/badge/Documentation-nyxx__extensions-yellow.svg)](https://pub.dev/documentation/nyxx_extensions/latest/)
 
-Simple, robust framework for creating discord bots for Dart language.
+Additional utilities and helpers for working with [nyxx](https://pub.dev/packages/nyxx).
 
-<hr />
+While the main [nyxx](https://pub.dev/packages/nyxx) package focuses on providing a wrapper only for the features described in [Discord's developer documentation](https://discord.com/developers/docs/intro), this package contains a collection of commonly used functions and plugins when making Discord bots, such as [pagination](https://pub.dev/documentation/nyxx_extensions/latest/nyxx_extensions/Pagination-class.html), [sanitization](https://pub.dev/documentation/nyxx_extensions/latest/nyxx_extensions/sanitizeContent.html) or [endpoint pagination](https://pub.dev/documentation/nyxx_extensions/latest/search.html?q=stream).
 
-### Features
-
-Additional extensions and subpackages to ease out developing bots in nyxx framework.
+This package is very open to contributions as it is built upon the needs of developers using [nyxx](https://pub.dev/packages/nyxx). If you find yourself implementing a feature that isn't specific to your bot, please consider [opening a pull request](https://github.com/nyxx-discord/nyxx_extensions/pulls) and add your code to this package. Read our [contribution document](https://github.com/nyxx-discord/nyxx_extensions/blob/dev/CONTRIBUTING.md) for more information.
 
 ## Other nyxx packages
 
-- [nyxx](https://github.com/nyxx-discord/nyxx)
-- [nyxx_interactions](https://github.com/nyxx-discord/nyxx_interactions)
-- [nyxx_commander](https://github.com/nyxx-discord/nyxx_commander)
-- [nyxx_lavalink](https://github.com/nyxx-discord/nyxx_lavalink)
-- [nyxx_pagination](https://github.com/nyxx-discord/nyxx_pagination)
+- [nyxx](https://pub.dev/packages/nyxx): The main package wrapping Discord's developer API.
+- [nyxx_commands](https://pub.dev/packages/nyxx_commands): A command framework for handling both simple & complex commands.
+- [nyxx_lavalink](https://pub.dev/packages/nyxx_lavalink): Lavalink support for playing audio in voice channels.
 
-## More examples
+## Additional documentation & help
 
-Nyxx examples can be found [here](https://github.com/nyxx-discord/nyxx_extensions/tree/dev/example).
+The API documentation for the latest stable version can be found on [pub](https://pub.dev/documentation/nyxx).
 
-### Example bots
-- [Running on Dart](https://github.com/l7ssha/running_on_dart)
+### [Docs and wiki](https://nyxx.l7ssha.xyz)
+Tutorials and wiki articles are hosted here, as well as API documentation for development versions from GitHub.
 
-## Documentation, help and examples
+### [Official nyxx Discord server](https://discord.gg/nyxx)
+Our Discord server is where you can get help for any nyxx packages, as well as release announcements and discussions about the library.
 
-**Dartdoc documentation for latest stable version is hosted on [pub](https://www.dartdocs.org/documentation/nyxx_extensions/latest/)**
+### [Discord API docs](https://discord.dev/)
+Discord's API documentation details what nyxx implements & provides more detailed explanations of certain topics.
 
-#### [Docs and wiki](https://nyxx.l7ssha.xyz)
-You can read docs and wiki articles for latest stable version on my website. This website also hosts docs for latest
-dev changes to framework (`dev` branch)
-
-#### [Official nyxx discord server](https://discord.gg/nyxx)
-If you need assistance in developing bot using nyxx you can join official nyxx discord guild.
-
-#### [Discord API docs](https://discordapp.com/developers/docs/intro)
-Discord API documentation features rich descriptions about all topics that nyxx covers.
-
-#### [Discord API Guild](https://discord.gg/discord-api)
+### [Discord API Server](https://discord.gg/discord-api)
 The unofficial guild for Discord Bot developers. To get help with nyxx check `#dart_nyxx` channel.
 
-#### [Dartdocs](https://www.dartdocs.org/documentation/nyxx_extensions/latest/)
+### [Pub.dev docs](https://pub.dev/documentation/nyxx)
 The dartdocs page will always have the documentation for the latest release.
 
 ## Contributing to Nyxx
 
-Read [contributing document](https://github.com/nyxx-discord/nyxx_extensions/blob/dev/CONTRIBUTING.md)
-
-## Credits
-
-* [Hackzzila's](https://github.com/Hackzzila) for [nyx](https://github.com/Hackzzila/nyx).
+Read the [contributing document](https://github.com/nyxx-discord/nyxx/blob/dev/CONTRIBUTING.md)
