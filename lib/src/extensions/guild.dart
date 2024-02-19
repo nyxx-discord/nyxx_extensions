@@ -10,6 +10,9 @@ extension PartialGuildExtensions on PartialGuild {
   ///
   /// {@macro paginated_endpoint_streaming_parameters}
   Stream<Ban> streamBans({Snowflake? after, Snowflake? before, int? pageSize}) => manager.streamBans(id, after: after, before: before, pageSize: pageSize);
+
+  /// Return a list of channels in the client's cache that are in this guild.
+  List<GuildChannel> get cachedChannels => manager.client.channels.cache.values.whereType<GuildChannel>().where((element) => element.guildId == id).toList();
 }
 
 /// Extensions on [Guild]s.

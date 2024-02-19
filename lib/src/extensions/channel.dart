@@ -1,4 +1,5 @@
 import 'package:nyxx/nyxx.dart';
+import 'package:nyxx_extensions/src/extensions/guild.dart';
 import 'package:nyxx_extensions/src/extensions/managers/channel_manager.dart';
 import 'package:nyxx_extensions/src/utils/formatters.dart';
 import 'package:nyxx_extensions/src/utils/permissions.dart';
@@ -30,4 +31,17 @@ extension ThreadExtensions on Thread {
   /// {@macro paginated_endpoint_streaming_parameters}
   Stream<ThreadMember> streamThreadMembers({bool? withMembers, Snowflake? after, Snowflake? before, int? pageSize}) =>
       manager.streamThreadMembers(id, withMembers: withMembers, after: after, before: before, pageSize: pageSize);
+}
+
+/// Extensions on [GuildCategory]s.
+extension GuildCategoryExtensions on GuildCategory {
+  /// Fetch the channels in this category.
+  Future<List<GuildChannel>> fetchChannels() async {
+    final guildChannels = await guild.fetchChannels();
+
+    return guildChannels.where((element) => element.parentId == id).toList();
+  }
+
+  /// Return a list of channels in the client's cache that are in this category.
+  List<GuildChannel> get cachedChannels => guild.cachedChannels.where((element) => element.parentId == id).toList();
 }
