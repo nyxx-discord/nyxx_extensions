@@ -4,6 +4,7 @@ library nyxx_extensions;
 export 'src/utils/emoji.dart';
 export 'src/utils/endpoint_paginator.dart' hide streamPaginatedEndpoint;
 export 'src/utils/formatters.dart';
+export 'src/utils/guild_joins.dart';
 export 'src/utils/pagination.dart';
 export 'src/utils/permissions.dart';
 export 'src/utils/sanitizer.dart';
