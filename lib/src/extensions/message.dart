@@ -1,6 +1,5 @@
 import 'package:nyxx/nyxx.dart';
-import 'package:nyxx_extensions/src/extensions/channel.dart';
-import 'package:nyxx_extensions/src/utils/endpoint_paginator.dart';
+import 'package:nyxx_extensions/nyxx_extensions.dart';
 
 /// Extensions on [Message]s.
 extension MessageExtensions on Message {
@@ -36,12 +35,5 @@ extension MessageExtensions on Message {
     Snowflake? before,
     int? pageSize,
   }) =>
-      streamPaginatedEndpoint(
-        ({before, after, limit}) => manager.fetchReactions(id, emoji, after: after, limit: limit),
-        extractId: (user) => user.id,
-        before: before,
-        after: after,
-        pageSize: pageSize,
-        order: StreamOrder.oldestFirst,
-      );
+      manager.streamReactions(id, emoji, after: after, before: before, pageSize: pageSize);
 }

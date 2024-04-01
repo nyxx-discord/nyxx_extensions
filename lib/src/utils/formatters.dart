@@ -1,4 +1,4 @@
-import 'package:nyxx/src/models/snowflake.dart';
+import 'package:nyxx/nyxx.dart';
 
 /// Wraps the [code] in a code block with the specified language, if any.
 String codeBlock(String code, [String language = '']) => '```$language\n$code\n```';
