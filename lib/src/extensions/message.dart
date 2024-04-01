@@ -1,5 +1,6 @@
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/src/extensions/channel.dart';
+import 'package:nyxx_extensions/src/utils/endpoint_paginator.dart';
 
 /// Extensions on [Message]s.
 extension MessageExtensions on Message {
@@ -25,4 +26,22 @@ extension MessageExtensions on Message {
 
     return channel.sendMessage(copiedBuilder);
   }
+
+  /// Same as [fetchReactions], but has no limit on the number of reactions returned.
+  ///
+  /// {@macro paginated_endpoint_streaming_parameters}
+  Stream<User> streamReactions(
+    ReactionBuilder emoji, {
+    Snowflake? after,
+    Snowflake? before,
+    int? pageSize,
+  }) =>
+      streamPaginatedEndpoint(
+        ({before, after, limit}) => manager.fetchReactions(id, emoji, after: after, limit: limit),
+        extractId: (user) => user.id,
+        before: before,
+        after: after,
+        pageSize: pageSize,
+        order: StreamOrder.oldestFirst,
+      );
 }
