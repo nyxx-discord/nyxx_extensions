@@ -34,4 +34,23 @@ extension MessageManagerExtensions on MessageManager {
         pageSize: pageSize,
         order: order,
       );
+
+  /// Same as [fetchReactions], but has no limit on the number of reactions returned.
+  ///
+  /// {@macro paginated_endpoint_streaming_parameters}
+  Stream<User> streamReactions(
+    Snowflake id,
+    ReactionBuilder emoji, {
+    Snowflake? after,
+    Snowflake? before,
+    int? pageSize,
+  }) =>
+      streamPaginatedEndpoint(
+        ({before, after, limit}) => fetchReactions(id, emoji, after: after, limit: limit),
+        extractId: (user) => user.id,
+        before: before,
+        after: after,
+        pageSize: pageSize,
+        order: StreamOrder.oldestFirst,
+      );
 }
