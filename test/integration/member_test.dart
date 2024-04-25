@@ -27,4 +27,15 @@ void main() {
       expect(mutualGuilds, isNotEmpty);
     },
   );
+
+  test('avatar.get()', skip: testToken == null ? 'No token provided' : false, () async {
+    final client = await Nyxx.connectRest(testToken!);
+
+    final self = await client.users.fetchCurrentUser();
+
+    expect(
+      self.avatar.get(size: 3072, format: CdnFormat.jpeg),
+      Uri.https('cdn.discordapp.com', 'avatars/${self.id}/${self.avatarHash}.${CdnFormat.jpeg.extension}', {'size': '3072'}),
+    );
+  });
 }
