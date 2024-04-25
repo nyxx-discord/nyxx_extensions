@@ -1,5 +1,5 @@
 import 'package:nyxx/nyxx.dart';
-import 'package:nyxx_extensions/src/extensions/channel.dart';
+import 'package:nyxx_extensions/nyxx_extensions.dart';
 
 /// Extensions on [Message]s.
 extension MessageExtensions on Message {
@@ -25,4 +25,15 @@ extension MessageExtensions on Message {
 
     return channel.sendMessage(copiedBuilder);
   }
+
+  /// Same as [fetchReactions], but has no limit on the number of reactions returned.
+  ///
+  /// {@macro paginated_endpoint_streaming_parameters}
+  Stream<User> streamReactions(
+    ReactionBuilder emoji, {
+    Snowflake? after,
+    Snowflake? before,
+    int? pageSize,
+  }) =>
+      manager.streamReactions(id, emoji, after: after, before: before, pageSize: pageSize);
 }
