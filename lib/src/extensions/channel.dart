@@ -22,6 +22,12 @@ extension GuildChannelExtensions on GuildChannel {
   ///
   /// {@macro compute_permissions_detail}
   Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
+
+  /// Create a builder with the properties of this channel
+  GuildChannelBuilder toBuilder() => GuildChannelBuilder(
+      name: name,
+      type: type,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList());
 }
 
 /// Extensions on [Thread]s.
