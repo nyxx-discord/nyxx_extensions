@@ -37,6 +37,9 @@ extension ThreadExtensions on Thread {
   /// {@macro paginated_endpoint_streaming_parameters}
   Stream<ThreadMember> streamThreadMembers({bool? withMembers, Snowflake? after, Snowflake? before, int? pageSize}) =>
       manager.streamThreadMembers(id, withMembers: withMembers, after: after, before: before, pageSize: pageSize);
+
+  /// Create a builder with the properties of this thread
+  ThreadBuilder toBuilder() => ThreadBuilder(name: name, type: type, autoArchiveDuration: autoArchiveDuration, rateLimitPerUser: rateLimitPerUser);
 }
 
 /// Extensions on [GuildCategory]s.
@@ -50,4 +53,66 @@ extension GuildCategoryExtensions on GuildCategory {
 
   /// Return a list of channels in the client's cache that are in this category.
   List<GuildChannel> get cachedChannels => guild.cachedChannels.where((element) => element.parentId == id).toList();
+
+  /// Create a builder with the properties of this category
+  GuildCategoryBuilder toBuilder() => GuildCategoryBuilder(
+      name: name,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+      position: position);
+}
+
+/// Extensions on [GuildTextChannel]s.
+extension GuildTextChannelExtensions on GuildTextChannel {
+  /// Create a builder with the properties of this channel
+  GuildTextChannelBuilder toBuilder() => GuildTextChannelBuilder(
+      name: name,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+      position: position,
+      defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+      isNsfw: isNsfw,
+      parentId: parentId,
+      rateLimitPerUser: rateLimitPerUser,
+      topic: topic);
+}
+
+/// Extensions on [GuildVoiceChannel]s.
+extension GuildVoiceChannelExtensions on GuildVoiceChannel {
+  /// Create a builder with the properties of this channel
+  GuildVoiceChannelBuilder toBuilder() => GuildVoiceChannelBuilder(
+      name: name,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+      position: position,
+      isNsfw: isNsfw,
+      parentId: parentId,
+      bitRate: bitrate,
+      rtcRegion: rtcRegion,
+      userLimit: userLimit,
+      videoQualityMode: videoQualityMode);
+}
+
+/// Extensions on [GuildAnnouncementChannel]s.
+extension GuildAnnouncementChannelExtensions on GuildAnnouncementChannel {
+  /// Create a builder with the properties of this channel
+  GuildAnnouncementChannelBuilder toBuilder() => GuildAnnouncementChannelBuilder(
+      name: name,
+      defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+      isNsfw: isNsfw,
+      parentId: parentId,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+      position: position,
+      topic: topic);
+}
+
+extension Test on GuildStageChannel {
+  /// Create a builder with the properties of this channel
+  GuildStageChannelBuilder toBuilder() => GuildStageChannelBuilder(
+      name: name,
+      bitRate: bitrate,
+      isNsfw: isNsfw,
+      parentId: parentId,
+      permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+      position: position,
+      rtcRegion: rtcRegion,
+      userLimit: userLimit,
+      videoQualityMode: videoQualityMode);
 }
