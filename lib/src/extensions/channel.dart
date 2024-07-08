@@ -29,6 +29,7 @@ extension GuildChannelExtensions on GuildChannel {
   GuildChannelBuilder toBuilder() => GuildChannelBuilder(
         name: name,
         type: type,
+        position: position,
         permissionOverwrites: permissionOverwrites
             .map((e) => PermissionOverwriteBuilder(
                   id: e.id,
@@ -56,13 +57,21 @@ extension ThreadExtensions on Thread {
           before: before,
           pageSize: pageSize);
 
-  /// Create a builder with the properties of this thread
-  ThreadBuilder toBuilder() => ThreadBuilder(
-        name: name,
-        type: type,
-        autoArchiveDuration: autoArchiveDuration,
-        rateLimitPerUser: rateLimitPerUser,
-      );
+  /// Create a builder with the properties of this thread.
+  ThreadBuilder toBuilder() {
+    // Check for PrivateThread to pass invitable to the builder
+    bool? invitable;
+    if (this is PrivateThread) {
+      invitable = (this as PrivateThread).isInvitable;
+    }
+    return ThreadBuilder(
+      name: name,
+      type: type,
+      autoArchiveDuration: autoArchiveDuration,
+      invitable: invitable,
+      rateLimitPerUser: rateLimitPerUser,
+    );
+  }
 }
 
 /// Extensions on [GuildCategory]s.
@@ -78,7 +87,7 @@ extension GuildCategoryExtensions on GuildCategory {
   List<GuildChannel> get cachedChannels =>
       guild.cachedChannels.where((element) => element.parentId == id).toList();
 
-  /// Create a builder with the properties of this category
+  /// Create a builder with the properties of this category.
   GuildCategoryBuilder toBuilder() => GuildCategoryBuilder(
         name: name,
         permissionOverwrites: permissionOverwrites
@@ -91,7 +100,7 @@ extension GuildCategoryExtensions on GuildCategory {
 
 /// Extensions on [GuildTextChannel]s.
 extension GuildTextChannelExtensions on GuildTextChannel {
-  /// Create a builder with the properties of this channel
+  /// Create a builder with the properties of this channel.
   GuildTextChannelBuilder toBuilder() => GuildTextChannelBuilder(
         name: name,
         permissionOverwrites: permissionOverwrites
@@ -109,7 +118,7 @@ extension GuildTextChannelExtensions on GuildTextChannel {
 
 /// Extensions on [GuildVoiceChannel]s.
 extension GuildVoiceChannelExtensions on GuildVoiceChannel {
-  /// Create a builder with the properties of this channel
+  /// Create a builder with the properties of this channel.
   GuildVoiceChannelBuilder toBuilder() => GuildVoiceChannelBuilder(
         name: name,
         permissionOverwrites: permissionOverwrites
@@ -128,7 +137,7 @@ extension GuildVoiceChannelExtensions on GuildVoiceChannel {
 
 /// Extensions on [GuildAnnouncementChannel]s.
 extension GuildAnnouncementChannelExtensions on GuildAnnouncementChannel {
-  /// Create a builder with the properties of this channel
+  /// Create a builder with the properties of this channel.
   GuildAnnouncementChannelBuilder toBuilder() =>
       GuildAnnouncementChannelBuilder(
         name: name,
@@ -146,7 +155,7 @@ extension GuildAnnouncementChannelExtensions on GuildAnnouncementChannel {
 
 /// Extensions on [GuildStageChannel]s.
 extension GuildStageChannelExtensions on GuildStageChannel {
-  /// Create a builder with the properties of this channel
+  /// Create a builder with the properties of this channel.
   GuildStageChannelBuilder toBuilder() => GuildStageChannelBuilder(
         name: name,
         bitRate: bitrate,
