@@ -22,10 +22,11 @@ extension GuildChannelExtensions on GuildChannel {
   ///
   /// {@macro compute_permissions_detail}
   Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
+}
 
-  /// Create a builder with the properties of this channel
-  // TODO: Which gegeric type should be provided here?
-  CreateBuilder<GuildChannel> toBuilder() {
+/// Extensions on all [GuildChannel] types
+extension GuildChannelsExtension<T extends GuildChannel> on T {
+  CreateBuilder<T> toBuilder() {
     switch (type) {
       case ChannelType.guildText:
         var cast = this as GuildTextChannel;
@@ -38,7 +39,7 @@ extension GuildChannelExtensions on GuildChannel {
           parentId: parentId,
           rateLimitPerUser: cast.rateLimitPerUser,
           topic: cast.topic,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.privateThread:
         var cast = this as PrivateThread;
         return ThreadBuilder.privateThread(
@@ -46,20 +47,20 @@ extension GuildChannelExtensions on GuildChannel {
           autoArchiveDuration: cast.autoArchiveDuration,
           invitable: cast.isInvitable,
           rateLimitPerUser: cast.rateLimitPerUser,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.publicThread:
         var cast = this as PublicThread;
         return ThreadBuilder.publicThread(
           name: name,
           autoArchiveDuration: cast.autoArchiveDuration,
           rateLimitPerUser: cast.rateLimitPerUser,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.guildCategory:
         return GuildCategoryBuilder(
           name: name,
           permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
           position: position,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.guildVoice:
         var cast = this as GuildVoiceChannel;
         return GuildVoiceChannelBuilder(
@@ -72,7 +73,7 @@ extension GuildChannelExtensions on GuildChannel {
           rtcRegion: cast.rtcRegion,
           userLimit: cast.userLimit,
           videoQualityMode: cast.videoQualityMode,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.guildAnnouncement:
         var cast = this as GuildAnnouncementChannel;
         return GuildAnnouncementChannelBuilder(
@@ -83,7 +84,7 @@ extension GuildChannelExtensions on GuildChannel {
           permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
           position: position,
           topic: cast.topic,
-        );
+        ) as CreateBuilder<T>;
       case ChannelType.guildStageVoice:
         var cast = this as GuildStageChannel;
         return GuildStageChannelBuilder(
@@ -96,7 +97,7 @@ extension GuildChannelExtensions on GuildChannel {
           rtcRegion: cast.rtcRegion,
           userLimit: cast.userLimit,
           videoQualityMode: cast.videoQualityMode,
-        );
+        ) as CreateBuilder<T>;
       default:
         return GuildChannelBuilder(
           name: name,
