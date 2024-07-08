@@ -103,7 +103,8 @@ extension GuildAnnouncementChannelExtensions on GuildAnnouncementChannel {
       topic: topic);
 }
 
-extension Test on GuildStageChannel {
+/// Extensions on [GuildStageChannel]s.
+extension GuildStageChannelExtensions on GuildStageChannel {
   /// Create a builder with the properties of this channel
   GuildStageChannelBuilder toBuilder() => GuildStageChannelBuilder(
       name: name,
