@@ -24,12 +24,88 @@ extension GuildChannelExtensions on GuildChannel {
   Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
 
   /// Create a builder with the properties of this channel
-  GuildChannelBuilder toBuilder() => GuildChannelBuilder(
-        name: name,
-        type: type,
-        position: position,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-      );
+  // TODO: Which gegeric type should be provided here?
+  CreateBuilder<GuildChannel> toBuilder() {
+    switch (type) {
+      case ChannelType.guildText:
+        var cast = this as GuildTextChannel;
+        return GuildTextChannelBuilder(
+          name: name,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          position: position,
+          defaultAutoArchiveDuration: cast.defaultAutoArchiveDuration,
+          isNsfw: isNsfw,
+          parentId: parentId,
+          rateLimitPerUser: cast.rateLimitPerUser,
+          topic: cast.topic,
+        );
+      case ChannelType.privateThread:
+        var cast = this as PrivateThread;
+        return ThreadBuilder.privateThread(
+          name: name,
+          autoArchiveDuration: cast.autoArchiveDuration,
+          invitable: cast.isInvitable,
+          rateLimitPerUser: cast.rateLimitPerUser,
+        );
+      case ChannelType.publicThread:
+        var cast = this as PublicThread;
+        return ThreadBuilder.publicThread(
+          name: name,
+          autoArchiveDuration: cast.autoArchiveDuration,
+          rateLimitPerUser: cast.rateLimitPerUser,
+        );
+      case ChannelType.guildCategory:
+        return GuildCategoryBuilder(
+          name: name,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          position: position,
+        );
+      case ChannelType.guildVoice:
+        var cast = this as GuildVoiceChannel;
+        return GuildVoiceChannelBuilder(
+          name: name,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          position: position,
+          isNsfw: isNsfw,
+          parentId: parentId,
+          bitRate: cast.bitrate,
+          rtcRegion: cast.rtcRegion,
+          userLimit: cast.userLimit,
+          videoQualityMode: cast.videoQualityMode,
+        );
+      case ChannelType.guildAnnouncement:
+        var cast = this as GuildAnnouncementChannel;
+        return GuildAnnouncementChannelBuilder(
+          name: name,
+          defaultAutoArchiveDuration: cast.defaultAutoArchiveDuration,
+          isNsfw: isNsfw,
+          parentId: parentId,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          position: position,
+          topic: cast.topic,
+        );
+      case ChannelType.guildStageVoice:
+        var cast = this as GuildStageChannel;
+        return GuildStageChannelBuilder(
+          name: name,
+          bitRate: cast.bitrate,
+          isNsfw: isNsfw,
+          parentId: parentId,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          position: position,
+          rtcRegion: cast.rtcRegion,
+          userLimit: cast.userLimit,
+          videoQualityMode: cast.videoQualityMode,
+        );
+      default:
+        return GuildChannelBuilder(
+          name: name,
+          type: type,
+          position: position,
+          permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+        );
+    }
+  }
 }
 
 /// Extensions on [Thread]s.
@@ -39,15 +115,6 @@ extension ThreadExtensions on Thread {
   /// {@macro paginated_endpoint_streaming_parameters}
   Stream<ThreadMember> streamThreadMembers({bool? withMembers, Snowflake? after, Snowflake? before, int? pageSize}) =>
       manager.streamThreadMembers(id, withMembers: withMembers, after: after, before: before, pageSize: pageSize);
-
-  /// Create a builder with the properties of this thread.
-  ThreadBuilder toBuilder() => ThreadBuilder(
-        name: name,
-        type: type,
-        autoArchiveDuration: autoArchiveDuration,
-        invitable: this is PrivateThread ? (this as PrivateThread).isInvitable : null,
-        rateLimitPerUser: rateLimitPerUser,
-      );
 }
 
 /// Extensions on [GuildCategory]s.
@@ -61,72 +128,4 @@ extension GuildCategoryExtensions on GuildCategory {
 
   /// Return a list of channels in the client's cache that are in this category.
   List<GuildChannel> get cachedChannels => guild.cachedChannels.where((element) => element.parentId == id).toList();
-
-  /// Create a builder with the properties of this category.
-  GuildCategoryBuilder toBuilder() => GuildCategoryBuilder(
-        name: name,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-        position: position,
-      );
-}
-
-/// Extensions on [GuildTextChannel]s.
-extension GuildTextChannelExtensions on GuildTextChannel {
-  /// Create a builder with the properties of this channel.
-  GuildTextChannelBuilder toBuilder() => GuildTextChannelBuilder(
-        name: name,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-        position: position,
-        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
-        isNsfw: isNsfw,
-        parentId: parentId,
-        rateLimitPerUser: rateLimitPerUser,
-        topic: topic,
-      );
-}
-
-/// Extensions on [GuildVoiceChannel]s.
-extension GuildVoiceChannelExtensions on GuildVoiceChannel {
-  /// Create a builder with the properties of this channel.
-  GuildVoiceChannelBuilder toBuilder() => GuildVoiceChannelBuilder(
-        name: name,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-        position: position,
-        isNsfw: isNsfw,
-        parentId: parentId,
-        bitRate: bitrate,
-        rtcRegion: rtcRegion,
-        userLimit: userLimit,
-        videoQualityMode: videoQualityMode,
-      );
-}
-
-/// Extensions on [GuildAnnouncementChannel]s.
-extension GuildAnnouncementChannelExtensions on GuildAnnouncementChannel {
-  /// Create a builder with the properties of this channel.
-  GuildAnnouncementChannelBuilder toBuilder() => GuildAnnouncementChannelBuilder(
-        name: name,
-        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
-        isNsfw: isNsfw,
-        parentId: parentId,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-        position: position,
-        topic: topic,
-      );
-}
-
-/// Extensions on [GuildStageChannel]s.
-extension GuildStageChannelExtensions on GuildStageChannel {
-  /// Create a builder with the properties of this channel.
-  GuildStageChannelBuilder toBuilder() => GuildStageChannelBuilder(
-        name: name,
-        bitRate: bitrate,
-        isNsfw: isNsfw,
-        parentId: parentId,
-        permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
-        position: position,
-        rtcRegion: rtcRegion,
-        userLimit: userLimit,
-        videoQualityMode: videoQualityMode,
-      );
 }
