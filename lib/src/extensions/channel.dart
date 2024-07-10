@@ -24,6 +24,87 @@ extension GuildChannelExtensions on GuildChannel {
   Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
 }
 
+/// Extensions on all [GuildChannel] types
+extension GuildChannelsExtension<T extends GuildChannel> on T {
+  /// Create a builder with the properties of this channel
+  GuildChannelBuilder<T> toBuilder() => switch (this) {
+        GuildTextChannel channel => GuildTextChannelBuilder(
+            name: channel.name,
+            defaultAutoArchiveDuration: channel.defaultAutoArchiveDuration,
+            isNsfw: channel.isNsfw,
+            parentId: channel.parentId,
+            permissionOverwrites: channel.permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(
+                      id: e.id,
+                      type: e.type,
+                      allow: e.allow,
+                      deny: e.deny,
+                    ))
+                .toList(),
+            position: channel.position,
+            rateLimitPerUser: channel.rateLimitPerUser,
+            topic: channel.topic,
+          ) as GuildChannelBuilder<T>,
+        GuildVoiceChannel channel => GuildVoiceChannelBuilder(
+            name: channel.name,
+            permissionOverwrites:
+                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            position: channel.position,
+            isNsfw: channel.isNsfw,
+            parentId: channel.parentId,
+            bitRate: channel.bitrate,
+            rtcRegion: channel.rtcRegion,
+            userLimit: channel.userLimit,
+            videoQualityMode: channel.videoQualityMode,
+          ) as GuildChannelBuilder<T>,
+        GuildStageChannel channel => GuildStageChannelBuilder(
+            name: channel.name,
+            bitRate: channel.bitrate,
+            isNsfw: channel.isNsfw,
+            parentId: channel.parentId,
+            permissionOverwrites:
+                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            position: channel.position,
+            rtcRegion: channel.rtcRegion,
+            userLimit: channel.userLimit,
+            videoQualityMode: channel.videoQualityMode,
+          ) as GuildChannelBuilder<T>,
+        PrivateThread thread => ThreadBuilder.privateThread(
+            name: thread.name,
+            autoArchiveDuration: thread.autoArchiveDuration,
+            invitable: thread.isInvitable,
+            rateLimitPerUser: thread.rateLimitPerUser,
+          ) as GuildChannelBuilder<T>,
+        PublicThread thread => ThreadBuilder.publicThread(
+            name: thread.name,
+            autoArchiveDuration: thread.autoArchiveDuration,
+            rateLimitPerUser: thread.rateLimitPerUser,
+          ) as GuildChannelBuilder<T>,
+        GuildCategory category => GuildCategoryBuilder(
+            name: category.name,
+            permissionOverwrites:
+                category.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            position: category.position,
+          ) as GuildChannelBuilder<T>,
+        GuildAnnouncementChannel channel => GuildAnnouncementChannelBuilder(
+            name: channel.name,
+            defaultAutoArchiveDuration: channel.defaultAutoArchiveDuration,
+            isNsfw: channel.isNsfw,
+            parentId: channel.parentId,
+            permissionOverwrites:
+                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            position: channel.position,
+            topic: channel.topic,
+          ) as GuildChannelBuilder<T>,
+        _ => GuildChannelBuilder(
+            name: name,
+            type: type,
+            position: position,
+            permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+          ),
+      };
+}
+
 /// Extensions on [Thread]s.
 extension ThreadExtensions on Thread {
   /// Same as [listThreadMembers], but has no limit on the number of members returned.
