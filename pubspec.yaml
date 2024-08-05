@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   http: ^1.1.0
-  nyxx: ^6.2.0
+  nyxx: ^6.3.1
 
 dev_dependencies:
   coverage: ^1.0.3

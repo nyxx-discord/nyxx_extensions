@@ -9,6 +9,7 @@ export 'src/utils/pagination.dart';
 export 'src/utils/permissions.dart';
 export 'src/utils/sanitizer.dart';
 
+export 'src/extensions/cdn_asset.dart' hide getRequest;
 export 'src/extensions/channel.dart';
 export 'src/extensions/client.dart';
 export 'src/extensions/date_time.dart';
