@@ -18,6 +18,15 @@ final channelMentionRegex = RegExp(r"<#(\d+)>");
 /// A pattern that matches guild emojis in a message.
 final guildEmojiRegex = RegExp(r"<(a?):(\w+):(\d+)>");
 
+const _baseCommandNamePattern = r"[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]+";
+
+/// A pattern that matches slash commands in a message.
+final commandMentionRegex = RegExp(
+  '<\\/(?<commandName>(?:$_baseCommandNamePattern(?:\\s$_baseCommandNamePattern){0,2})):(\\d{17,19})>',
+  unicode: true,
+  multiLine: true,
+);
+
 /// A type of target [sanitizeContent] can operate on.
 enum SanitizerTarget {
   /// Sanitize user mentions that match [userMentionRegex].
@@ -34,6 +43,9 @@ enum SanitizerTarget {
 
   /// Sanitize guild emojis that match [guildEmojiRegex].
   emojis,
+
+  /// Sanitize slash commands mentions that match [commandMentionRegex].
+  commands,
 }
 
 /// An action [sanitizeContent] can take on a target.
@@ -77,9 +89,10 @@ Future<String> sanitizeContent(
         SanitizerTarget.everyone => everyoneMentionRegex,
         SanitizerTarget.channels => channelMentionRegex,
         SanitizerTarget.emojis => guildEmojiRegex,
+        SanitizerTarget.commands => commandMentionRegex,
       };
 
-  Future<String> name(Match match, SanitizerTarget target) async => switch (target) {
+  Future<String> name(RegExpMatch match, SanitizerTarget target) async => switch (target) {
         SanitizerTarget.everyone => match.group(1)!,
         SanitizerTarget.channels => switch (await client.channels[Snowflake.parse(match.group(1)!)].getOrNull()) {
             GuildChannel(:final name) || GroupDmChannel(:final name) => name,
@@ -99,6 +112,7 @@ Future<String> sanitizeContent(
               },
           },
         SanitizerTarget.emojis => match.group(2)!,
+        SanitizerTarget.commands => match.namedGroup('commandName')!,
       };
 
   String prefix(SanitizerTarget target) => switch (target) {
@@ -106,11 +120,16 @@ Future<String> sanitizeContent(
         SanitizerTarget.everyone => '@$_whitespaceCharacter',
         SanitizerTarget.channels => '#',
         SanitizerTarget.emojis => '',
+        SanitizerTarget.commands => '</',
       };
 
-  String suffix(SanitizerTarget target) => target == SanitizerTarget.emojis ? ':' : '';
+  String suffix(SanitizerTarget target) => switch (target) {
+        SanitizerTarget.emojis => ':',
+        SanitizerTarget.commands => '>',
+        _ => '',
+      };
 
-  Future<String> resolve(Match match, SanitizerTarget target, SanitizerAction action) async => switch (action) {
+  Future<String> resolve(RegExpMatch match, SanitizerTarget target, SanitizerAction action) async => switch (action) {
         SanitizerAction.ignore => match.group(0)!,
         SanitizerAction.remove => '',
         SanitizerAction.nameNoPrefix => await name(match, target),
@@ -120,7 +139,8 @@ Future<String> sanitizeContent(
             SanitizerTarget.roles => '<@&$_whitespaceCharacter${match.group(1)!}>',
             SanitizerTarget.everyone => '@$_whitespaceCharacter${match.group(1)!}',
             SanitizerTarget.channels => '<#$_whitespaceCharacter${match.group(1)!}>',
-            SanitizerTarget.emojis => '<$_whitespaceCharacter${match.group(1) ?? ''}:${match.group(2)}:${match.group(3)}>',
+            SanitizerTarget.emojis => '<$_whitespaceCharacter${match.group(1) ?? ''}\\:${match.group(2)}\\:${match.group(3)}>',
+            SanitizerTarget.commands => '</$_whitespaceCharacter${match.namedGroup('commandName')}:${match.group(2)}>',
           },
       };
 
