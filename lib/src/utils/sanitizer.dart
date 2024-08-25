@@ -24,7 +24,6 @@ const _baseCommandNamePattern = r"[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]+";
 final commandMentionRegex = RegExp(
   '<\\/(?<commandName>(?:$_baseCommandNamePattern(?:\\s$_baseCommandNamePattern){0,2})):(\\d{17,19})>',
   unicode: true,
-  multiLine: true,
 );
 
 /// A type of target [sanitizeContent] can operate on.
