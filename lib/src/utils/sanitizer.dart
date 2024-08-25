@@ -118,13 +118,12 @@ Future<String> sanitizeContent(
         SanitizerTarget.users || SanitizerTarget.roles => '@',
         SanitizerTarget.everyone => '@$_whitespaceCharacter',
         SanitizerTarget.channels => '#',
-        SanitizerTarget.emojis => '',
-        SanitizerTarget.commands => '</',
+        SanitizerTarget.emojis => ':',
+        SanitizerTarget.commands => '/',
       };
 
   String suffix(SanitizerTarget target) => switch (target) {
         SanitizerTarget.emojis => ':',
-        SanitizerTarget.commands => '>',
         _ => '',
       };
 
