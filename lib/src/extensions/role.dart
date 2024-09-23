@@ -12,3 +12,20 @@ extension PartialRoleExtensions on PartialRole {
     return roleMention(id);
   }
 }
+
+/// Extensions on [List]s of [Role]s.
+extension RoleList on List<Role> {
+  /// Compare two [Role]s by their positions.
+  static int compare(Role a, Role b) {
+    final position = a.position.compareTo(b.position);
+    if (position != 0) return position;
+
+    return a.id.compareTo(b.id);
+  }
+
+  /// The highest role in this list.
+  Role get highest => reduce((a, b) => compare(a, b) < 0 ? b : a);
+
+  /// The roles in this list, sorted from lowest to highest.
+  List<Role> get sorted => List.of(this)..sort(compare);
+}
