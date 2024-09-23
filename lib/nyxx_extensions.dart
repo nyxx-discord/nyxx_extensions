@@ -31,3 +31,4 @@ export 'src/extensions/scheduled_event.dart';
 export 'src/extensions/snowflake_entity.dart';
 export 'src/extensions/user.dart';
 export 'src/extensions/list.dart';
+export 'src/extensions/application.dart';
