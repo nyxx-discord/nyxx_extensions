@@ -24,7 +24,7 @@ void main() async {
   // Sanitizing content makes it safe to send to Discord without triggering any mentions
   client.onMessageCreate.listen((event) async {
     if (event.message.content.startsWith('!sanitize')) {
-      event.message.channel.sendMessage(MessageBuilder(
+      await event.message.channel.sendMessage(MessageBuilder(
         content: 'Sanitized content: ${await sanitizeContent(event.message.content, channel: event.message.channel)}',
       ));
     }
@@ -63,6 +63,16 @@ ullamcorper morbi tincidunt ornare.
         loreumIpsum,
         // Split into chunks 100 characters long.
         maxLength: 100,
+      ));
+    }
+  });
+
+  client.onMessageCreate.listen((event) async {
+    if (event.message.content.startsWith('!avatar') && event.message.mentions.isNotEmpty) {
+      // Display the first mentioned user's avatar with the specified size.
+      final user = event.message.mentions.first;
+      await event.message.channel.sendMessage(MessageBuilder(
+        content: 'Avatar URL: ${user.avatar.get(format: CdnFormat.jpeg, size: 3072)}',
       ));
     }
   });

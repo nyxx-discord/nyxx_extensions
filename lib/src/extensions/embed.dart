@@ -1,6 +1,8 @@
 import 'package:nyxx/nyxx.dart';
 
-extension EmbedExtension on Embed {
+/// Extensions on [Embed].
+extension EmbedExtensions on Embed {
+  /// Return an [EmbedBuilder] that can be used to construct this embed.
   EmbedBuilder toEmbedBuilder() {
     return EmbedBuilder(
       author: author?._toEmbedAuthorBuilder(),

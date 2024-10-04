@@ -1,4 +1,4 @@
-import 'package:nyxx/src/models/snowflake.dart';
+import 'package:nyxx/nyxx.dart';
 
 /// Wraps the [code] in a code block with the specified language, if any.
 String codeBlock(String code, [String language = '']) => '```$language\n$code\n```';
@@ -58,5 +58,9 @@ enum TimestampStyle {
 
   /// The style of the timestamp.
   final String style;
+
   const TimestampStyle(this.style);
+
+  /// Format [date] using this timestamp style.
+  String format(DateTime date) => formatDate(date, this);
 }

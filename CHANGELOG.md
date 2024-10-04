@@ -1,19 +1,42 @@
+## 4.2.0
+__04.10.2024__
+
+- feat: Add an alternative method for formatting dates (#27)
+- feat: Add methods to stream entities from paginated endpoints (#28)
+- feat: Add methods for computing permissions in a channel. (#29)
+- bug: Update README.md (#32)
+- feat: Restructure nyxx_extensions (#31)
+- feat: Add a plugin for detecting when the client joins or leaves a guild (#33)
+- feat: Add a method for fetching the children of a `CategoryChannel` (#34)
+- feat: Add endpoint pagination for reactions (#35)
+- feat: Add getter for everyone role in a guild (#36)
+- feat: Add .toBuilder() method to GuildChannel (#39)
+- feat: Add extension getter for cdn assets (#37)
+- feat: Add support for sanitizing slash commands mentions (#40)
+- feat: Add getInviteUrl extension for PartialApplications (#41)
+- feat: Add utilities for fetching lists of entities (#42)
+- feat: Add extension to get a member's highest role (#43)
+
 ## 4.1.0
 __15.11.2023__
+
 - Added a helper to reply to a message.
 - Fixed an issue with paginating back to a page that had already been seen.
 
 ## 4.0.0
 __20.10.2023__
+
 - Fixed an issue with link formatting.
 
 ## 4.0.0-dev.1
 __17.09.2023__
+
 - Bump nyxx to `6.0.0`. See the changelog at https://pub.dev/packages/nyxx for more information.
 - Removed helpers now in the nyxx package.
 - Added pagination support.
 
 ## 3.2.0
+__10.09.2023__
 
 - Bump nyxx to `4.2.0`
 - Correctly export `acronym` property on guild

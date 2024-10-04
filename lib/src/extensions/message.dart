@@ -1,7 +1,8 @@
 import 'package:nyxx/nyxx.dart';
-import 'package:nyxx_extensions/src/channel.dart';
+import 'package:nyxx_extensions/nyxx_extensions.dart';
 
-extension MessageUtils on Message {
+/// Extensions on [Message]s.
+extension MessageExtensions on Message {
   /// A URL clients can visit to navigate to this message.
   Future<Uri> get url async => Uri.https(manager.client.apiOptions.host, '${(await channel.get()).url.path}/$id');
 
@@ -24,4 +25,15 @@ extension MessageUtils on Message {
 
     return channel.sendMessage(copiedBuilder);
   }
+
+  /// Same as [fetchReactions], but has no limit on the number of reactions returned.
+  ///
+  /// {@macro paginated_endpoint_streaming_parameters}
+  Stream<User> streamReactions(
+    ReactionBuilder emoji, {
+    Snowflake? after,
+    Snowflake? before,
+    int? pageSize,
+  }) =>
+      manager.streamReactions(id, emoji, after: after, before: before, pageSize: pageSize);
 }
