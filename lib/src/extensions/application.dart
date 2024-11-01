@@ -4,7 +4,7 @@ import 'package:nyxx/nyxx.dart';
 extension ApplicationExtensions on PartialApplication {
   /// Get a URL users can visit to add this bot to a guild.
   Uri getInviteUri({
-    List<String> scopes = const ['bot', 'application.commands'],
+    List<String> scopes = const ['bot', 'applications.commands'],
     Flags<Permissions>? permissions,
     Snowflake? guildId,
     bool? disableGuildSelect,
