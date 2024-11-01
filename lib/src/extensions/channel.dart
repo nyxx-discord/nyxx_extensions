@@ -13,7 +13,8 @@ extension PartialChannelExtensions on PartialChannel {
 /// Extensions on [Channel]s.
 extension ChannelExtensions on Channel {
   /// A URL clients can visit to navigate to this channel.
-  Uri get url => Uri.https(manager.client.apiOptions.host, '/channels/${this is GuildChannel ? '${(this as GuildChannel).guildId}' : '@me'}/$id');
+  Uri get url => Uri.https(manager.client.apiOptions.host,
+      '/channels/${this is GuildChannel ? '${(this as GuildChannel).guildId}' : '@me'}/$id');
 }
 
 /// Extensions on [GuildChannel]s.
@@ -21,7 +22,8 @@ extension GuildChannelExtensions on GuildChannel {
   /// Compute [member]'s permissions in this channel.
   ///
   /// {@macro compute_permissions_detail}
-  Future<Permissions> computePermissionsFor(PartialMember member) async => await computePermissions(this, await member.get());
+  Future<Permissions> computePermissionsFor(PartialMember member) async =>
+      await computePermissions(this, await member.get());
 }
 
 /// Extensions on all [GuildChannel] types
@@ -47,8 +49,9 @@ extension GuildChannelsExtension<T extends GuildChannel> on T {
           ) as GuildChannelBuilder<T>,
         GuildVoiceChannel channel => GuildVoiceChannelBuilder(
             name: channel.name,
-            permissionOverwrites:
-                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            permissionOverwrites: channel.permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny))
+                .toList(),
             position: channel.position,
             isNsfw: channel.isNsfw,
             parentId: channel.parentId,
@@ -62,8 +65,9 @@ extension GuildChannelsExtension<T extends GuildChannel> on T {
             bitRate: channel.bitrate,
             isNsfw: channel.isNsfw,
             parentId: channel.parentId,
-            permissionOverwrites:
-                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            permissionOverwrites: channel.permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny))
+                .toList(),
             position: channel.position,
             rtcRegion: channel.rtcRegion,
             userLimit: channel.userLimit,
@@ -82,8 +86,9 @@ extension GuildChannelsExtension<T extends GuildChannel> on T {
           ) as GuildChannelBuilder<T>,
         GuildCategory category => GuildCategoryBuilder(
             name: category.name,
-            permissionOverwrites:
-                category.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            permissionOverwrites: category.permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny))
+                .toList(),
             position: category.position,
           ) as GuildChannelBuilder<T>,
         GuildAnnouncementChannel channel => GuildAnnouncementChannelBuilder(
@@ -91,8 +96,9 @@ extension GuildChannelsExtension<T extends GuildChannel> on T {
             defaultAutoArchiveDuration: channel.defaultAutoArchiveDuration,
             isNsfw: channel.isNsfw,
             parentId: channel.parentId,
-            permissionOverwrites:
-                channel.permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            permissionOverwrites: channel.permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny))
+                .toList(),
             position: channel.position,
             topic: channel.topic,
           ) as GuildChannelBuilder<T>,
@@ -100,7 +106,9 @@ extension GuildChannelsExtension<T extends GuildChannel> on T {
             name: name,
             type: type,
             position: position,
-            permissionOverwrites: permissionOverwrites.map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny)).toList(),
+            permissionOverwrites: permissionOverwrites
+                .map((e) => PermissionOverwriteBuilder(id: e.id, type: e.type, allow: e.allow, deny: e.deny))
+                .toList(),
           ),
       };
 }

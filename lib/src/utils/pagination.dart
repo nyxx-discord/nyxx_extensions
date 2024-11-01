@@ -122,12 +122,15 @@ class Pagination extends NyxxPlugin<NyxxGateway> {
   /// A stream of interactions that were recognized as being created by a [Pagination] plugin different to this one.
   ///
   /// This is often a sign of leftover menus from a previous client session.
-  Stream<InteractionCreateEvent<MessageComponentInteraction>> get onUnhandledInteraction => _unhandledInteractionsController.stream;
-  final StreamController<InteractionCreateEvent<MessageComponentInteraction>> _unhandledInteractionsController = StreamController.broadcast();
+  Stream<InteractionCreateEvent<MessageComponentInteraction>> get onUnhandledInteraction =>
+      _unhandledInteractionsController.stream;
+  final StreamController<InteractionCreateEvent<MessageComponentInteraction>> _unhandledInteractionsController =
+      StreamController.broadcast();
 
   /// A stream of interactions that were recognized by this plugin but were not handled because the wrong user triggered the interaction.
   Stream<InteractionCreateEvent<MessageComponentInteraction>> get onDisallowedUse => _disallowedUseController.stream;
-  final StreamController<InteractionCreateEvent<MessageComponentInteraction>> _disallowedUseController = StreamController.broadcast();
+  final StreamController<InteractionCreateEvent<MessageComponentInteraction>> _disallowedUseController =
+      StreamController.broadcast();
 
   /// Create a new [Pagination] instance.
   Pagination(this.options);
@@ -433,7 +436,9 @@ class _PaginationState {
     }
 
     final knownIds = {jumpToStartId, jumpToEndId, previousId, nextId};
-    if (builder.components?.any((row) => row.components.any((element) => element is ButtonBuilder && knownIds.contains(element.customId))) == true) {
+    if (builder.components?.any((row) =>
+            row.components.any((element) => element is ButtonBuilder && knownIds.contains(element.customId))) ==
+        true) {
       // We've already added controls to this builder, likely when the user navigated to this page previously.
       return;
     }

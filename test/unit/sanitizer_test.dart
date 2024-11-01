@@ -32,17 +32,20 @@ void main() {
 
     test(
       'ignore',
-      () async => expect(await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.ignore), equals(sampleContent)),
+      () async => expect(await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.ignore),
+          equals(sampleContent)),
     );
 
     test(
       'remove',
-      () async => expect(await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.remove), equals(removed)),
+      () async => expect(
+          await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.remove), equals(removed)),
     );
 
     test(
       'sanitize',
-      () async => expect(await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.sanitize), equals(sanitized)),
+      () async => expect(
+          await sanitizeContent(sampleContent, channel: channel, action: SanitizerAction.sanitize), equals(sanitized)),
     );
   });
 }
