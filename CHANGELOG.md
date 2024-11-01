@@ -1,3 +1,8 @@
+## 4.2.1
+__01.11.2024__
+
+- bug: Fix getInviteUri default scopes
+
 ## 4.2.0
 __04.10.2024__
 
