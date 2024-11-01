@@ -35,8 +35,7 @@ void main() {
 
     expect(
       self.avatar.get(size: 3072, format: CdnFormat.jpeg),
-      Uri.https(
-          'cdn.discordapp.com', 'avatars/${self.id}/${self.avatarHash}.${CdnFormat.jpeg.extension}', {'size': '3072'}),
+      Uri.https('cdn.discordapp.com', 'avatars/${self.id}/${self.avatarHash}.${CdnFormat.jpeg.extension}', {'size': '3072'}),
     );
   });
 }

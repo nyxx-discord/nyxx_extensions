@@ -6,6 +6,5 @@ extension PartialMemberExtensions on PartialMember {
   /// Compute this member's permissions in [channel].
   ///
   /// {@macro compute_permissions_detail}
-  Future<Permissions> computePermissionsIn(GuildChannel channel) async =>
-      await computePermissions(channel, await get());
+  Future<Permissions> computePermissionsIn(GuildChannel channel) async => await computePermissions(channel, await get());
 }

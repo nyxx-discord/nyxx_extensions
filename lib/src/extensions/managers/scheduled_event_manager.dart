@@ -17,8 +17,7 @@ extension ScheduledEventManagerExtensions on ScheduledEventManager {
     StreamOrder? order,
   }) =>
       streamPaginatedEndpoint(
-        ({after, before, limit}) =>
-            listEventUsers(id, after: after, before: before, limit: limit, withMembers: withMembers),
+        ({after, before, limit}) => listEventUsers(id, after: after, before: before, limit: limit, withMembers: withMembers),
         extractId: (user) => user.user.id,
         before: before,
         after: after,

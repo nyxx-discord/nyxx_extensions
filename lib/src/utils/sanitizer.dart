@@ -137,8 +137,7 @@ Future<String> sanitizeContent(
             SanitizerTarget.roles => '<@&$_whitespaceCharacter${match.group(1)!}>',
             SanitizerTarget.everyone => '@$_whitespaceCharacter${match.group(1)!}',
             SanitizerTarget.channels => '<#$_whitespaceCharacter${match.group(1)!}>',
-            SanitizerTarget.emojis =>
-              '<$_whitespaceCharacter${match.group(1) ?? ''}\\:${match.group(2)}\\:${match.group(3)}>',
+            SanitizerTarget.emojis => '<$_whitespaceCharacter${match.group(1) ?? ''}\\:${match.group(2)}\\:${match.group(3)}>',
             SanitizerTarget.commands => '</$_whitespaceCharacter${match.namedGroup('commandName')}:${match.group(2)}>',
           },
       };

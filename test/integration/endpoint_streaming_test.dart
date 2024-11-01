@@ -52,8 +52,7 @@ void main() {
         expect(oldestFirstMessages[i].id.isBefore(oldestFirstMessages[i + 1].id), isTrue);
       }
 
-      final mostRecentFirstMessages =
-          await channel.messages.stream(order: StreamOrder.mostRecentFirst).take(50).toList();
+      final mostRecentFirstMessages = await channel.messages.stream(order: StreamOrder.mostRecentFirst).take(50).toList();
       for (int i = 0; i < mostRecentFirstMessages.length - 1; i++) {
         expect(mostRecentFirstMessages[i].id.isAfter(mostRecentFirstMessages[i + 1].id), isTrue);
       }

@@ -16,8 +16,7 @@ extension UserManagerExtensions on UserManager {
     StreamOrder? order,
   }) =>
       streamPaginatedEndpoint(
-        ({after, before, limit}) =>
-            listCurrentUserGuilds(after: after, before: before, limit: limit, withCounts: withCounts),
+        ({after, before, limit}) => listCurrentUserGuilds(after: after, before: before, limit: limit, withCounts: withCounts),
         extractId: (guild) => guild.id,
         before: before,
         after: after,
