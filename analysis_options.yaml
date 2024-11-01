@@ -1,10 +1,4 @@
 include: package:lints/recommended.yaml
 
-linter:
-  rules:
-    implementation_imports: false
-
 analyzer:
-  language:
-    strict-raw-types: true
-    strict-casts: false
+  exclude: [build/**]
