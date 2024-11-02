@@ -1,7 +1,8 @@
 import 'package:nyxx/nyxx.dart';
+import 'package:nyxx_extensions/src/extensions/cdn_asset.dart';
 
 /// Extensions on [PartialApplication]s.
-extension ApplicationExtensions on PartialApplication {
+extension PartialApplicationExtensions on PartialApplication {
   /// Get a URL users can visit to add this bot to a guild.
   Uri getInviteUri({
     List<String> scopes = const ['bot', 'applications.commands'],
@@ -20,4 +21,12 @@ extension ApplicationExtensions on PartialApplication {
           if (disableGuildSelect != null) 'disable_guild_select': disableGuildSelect,
         },
       );
+}
+
+extension ApplicationExtensions on Application {
+  /// The URL of this application's icon image.
+  Uri? iconUrl({CdnFormat? format, int? size}) => icon?.get(format: format, size: size);
+
+  /// The URL of this application's cover image.
+  Uri? coverUrl({CdnFormat? format, int? size}) => coverImage?.get(format: format, size: size);
 }

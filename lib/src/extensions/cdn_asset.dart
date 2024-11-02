@@ -1,6 +1,7 @@
 import 'package:nyxx/nyxx.dart';
 
 extension CdnAssetExtensions on CdnAsset {
+  /// Get the URL for this asset whth the given [format] and [size].
   Uri get({CdnFormat? format, int? size}) => getRequest(this, format ?? defaultFormat, size).prepare(client).url;
 }
 

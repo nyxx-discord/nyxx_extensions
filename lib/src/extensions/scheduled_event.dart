@@ -1,6 +1,7 @@
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/src/extensions/managers/scheduled_event_manager.dart';
 import 'package:nyxx_extensions/src/utils/endpoint_paginator.dart';
+import 'package:nyxx_extensions/src/extensions/cdn_asset.dart';
 
 /// Extensions on [PartialScheduledEvent].
 extension PartialScheduledEventExtensions on PartialScheduledEvent {
@@ -24,4 +25,9 @@ extension PartialScheduledEventExtensions on PartialScheduledEvent {
         pageSize: pageSize,
         withMembers: withMembers,
       );
+}
+
+extension ScheduledEventExtensions on ScheduledEvent {
+  /// The URL of this event's icon image.
+  Uri? coverUrl({CdnFormat? format, int? size}) => coverImage?.get(format: format, size: size);
 }

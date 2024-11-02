@@ -1,5 +1,6 @@
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/src/extensions/managers/guild_manager.dart';
+import 'package:nyxx_extensions/src/extensions/cdn_asset.dart';
 
 /// Extensions on [PartialGuild]s.
 extension PartialGuildExtensions on PartialGuild {
@@ -21,4 +22,16 @@ extension GuildExtensions on Guild {
   String get acronym {
     return name.replaceAll(r"'s ", ' ').replaceAllMapped(RegExp(r'\w+'), (match) => match[0]![0]).replaceAll(RegExp(r'\s'), '');
   }
+
+  /// The URL of this guild's icon image.
+  Uri? iconUrl({CdnFormat? format, int? size}) => icon?.get(format: format, size: size);
+
+  /// The URL of this guild's banner image.
+  Uri? bannerUrl({CdnFormat? format, int? size}) => banner?.get(format: format, size: size);
+
+  /// The URL of this guild's splash image.
+  Uri? splashUrl({CdnFormat? format, int? size}) => splash?.get(format: format, size: size);
+
+  /// The URL of this guild's discovery splash image.
+  Uri? discoverySplashUrl({CdnFormat? format, int? size}) => discoverySplash?.get(format: format, size: size);
 }
