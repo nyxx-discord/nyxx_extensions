@@ -12,6 +12,9 @@ extension PartialRoleExtensions on PartialRole {
 
     return roleMention(id);
   }
+
+  /// The date this role was created at.
+  DateTime get createdAt => id.timestamp;
 }
 
 /// Extensions on [List]s of [Role]s.

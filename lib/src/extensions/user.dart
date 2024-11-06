@@ -28,6 +28,9 @@ extension PartialUserExtensions on PartialUser {
 
   /// A mention of this user.
   String get mention => userMention(id);
+
+  /// Returns when the user was created.
+  DateTime get createdAt => id.timestamp;
 }
 
 extension UserExtensions on User {

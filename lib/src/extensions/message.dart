@@ -1,6 +1,11 @@
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/nyxx_extensions.dart';
 
+extension PartialMessageExtensions on PartialMessage {
+  /// The time this message was sent at.
+  DateTime get createdAt => id.timestamp;
+}
+
 /// Extensions on [Message]s.
 extension MessageExtensions on Message {
   /// A URL clients can visit to navigate to this message.

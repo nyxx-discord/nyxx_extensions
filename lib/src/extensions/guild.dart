@@ -14,6 +14,9 @@ extension PartialGuildExtensions on PartialGuild {
 
   /// Return a list of channels in the client's cache that are in this guild.
   List<GuildChannel> get cachedChannels => manager.client.channels.cache.values.whereType<GuildChannel>().where((element) => element.guildId == id).toList();
+
+  /// The date this guild was created at.
+  DateTime get createdAt => id.timestamp;
 }
 
 /// Extensions on [Guild]s.
