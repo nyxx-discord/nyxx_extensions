@@ -1,6 +1,5 @@
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/src/utils/formatters.dart';
-import 'package:nyxx_extensions/src/extensions/cdn_asset.dart';
 
 /// Extensions on [PartialRole]s.
 extension PartialRoleExtensions on PartialRole {
@@ -12,9 +11,6 @@ extension PartialRoleExtensions on PartialRole {
 
     return roleMention(id);
   }
-
-  /// The date this role was created at.
-  DateTime get createdAt => id.timestamp;
 }
 
 /// Extensions on [List]s of [Role]s.
@@ -32,9 +28,4 @@ extension RoleList on List<Role> {
 
   /// The roles in this list, sorted from lowest to highest.
   List<Role> get sorted => List.of(this)..sort(compare);
-}
-
-extension RoleExtensions on Role {
-  /// The URL of this role's icon image.
-  Uri? iconUrl({CdnFormat? format, int? size}) => icon?.get(format: format, size: size);
 }

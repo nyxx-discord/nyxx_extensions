@@ -11,6 +11,9 @@ extension SnowflakeEntityExtensions<T extends SnowflakeEntity<T>> on SnowflakeEn
       return null;
     }
   }
+
+  /// The date and time this entity was created.
+  DateTime get createdAt => id.timestamp;
 }
 
 /// Extensions on [ManagedSnowflakeEntity]s.

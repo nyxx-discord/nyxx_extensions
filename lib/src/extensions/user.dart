@@ -28,23 +28,11 @@ extension PartialUserExtensions on PartialUser {
 
   /// A mention of this user.
   String get mention => userMention(id);
-
-  /// Returns when the user was created.
-  DateTime get createdAt => id.timestamp;
 }
 
 extension UserExtensions on User {
   /// The user's unique username, if migrated, else a combination of their username and discriminator.
   String get tag => discriminator == '0' ? username : '$username#$discriminator';
-
-  /// The URL of this user's avatar image.
-  Uri avatarUrl({CdnFormat? format, int? size}) => avatar.get(format: format, size: size);
-
-  /// The URL of this user's banner image.
-  Uri? bannerUrl({CdnFormat? format, int? size}) => banner?.get(format: format, size: size);
-
-  /// The URL of this user's default avatar image.
-  Uri get defaultAvatarUrl => defaultAvatar.url;
 
   /// The URL of this user's avatar decoration.
   // Forcefully add the `.png` extension, otherwise it's converted as a GIF if the hash starts with `a_`, and GIFs are not supported.
