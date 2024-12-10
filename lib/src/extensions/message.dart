@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/nyxx_extensions.dart';
 
