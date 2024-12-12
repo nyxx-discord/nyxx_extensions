@@ -1,3 +1,6 @@
+## 4.3.0
+- feature: add some aliases and helpers.
+
 ## 4.2.1
 __01.11.2024__
 
