@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;

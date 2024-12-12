@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:nyxx/nyxx.dart';
 import 'package:nyxx_extensions/nyxx_extensions.dart';
 
@@ -21,6 +23,9 @@ extension MessageExtensions on Message {
       suppressEmbeds: builder.suppressEmbeds,
       suppressNotifications: builder.suppressNotifications,
       tts: builder.tts,
+      enforceNonce: builder.enforceNonce,
+      poll: builder.poll,
+      referencedMessage: builder.referencedMessage,
     );
 
     return channel.sendMessage(copiedBuilder);

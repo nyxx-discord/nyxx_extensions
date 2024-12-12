@@ -1,7 +1,7 @@
 import 'package:nyxx/nyxx.dart';
 
 /// Extensions on [PartialApplication]s.
-extension ApplicationExtensions on PartialApplication {
+extension PartialApplicationExtensions on PartialApplication {
   /// Get a URL users can visit to add this bot to a guild.
   Uri getInviteUri({
     List<String> scopes = const ['bot', 'applications.commands'],
