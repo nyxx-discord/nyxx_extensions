@@ -191,8 +191,8 @@ class Pagination extends NyxxPlugin<NyxxGateway> {
     });
 
     client.onMessageCreate.listen((event) {
-      final rows = (event.message.components?.cast<ActionRowComponent>()) ?? <ActionRowComponent>[];
-      final components = rows.expand((element) => element.components);
+      final rows = (event.message.components) ?? [];
+      final components = rows.whereType<ActionRowComponent>().expand((element) => element.components);
 
       for (final component in components.whereType<ButtonComponent>()) {
         final state = _states[component.customId];
