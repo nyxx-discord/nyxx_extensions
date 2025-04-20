@@ -1,4 +1,6 @@
 ## 4.3.1
+__20.04.2025__
+- bug: Add support for Components V2.
 
 ## 4.3.0
 - feature: add some aliases and helpers.
