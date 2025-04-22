@@ -1,3 +1,7 @@
+## 4.3.2
+__22.04.2025__
+- bug: Fix pagination controls not being backward compatible with Components V2.
+
 ## 4.3.1
 __20.04.2025__
 - bug: Add support for Components V2.

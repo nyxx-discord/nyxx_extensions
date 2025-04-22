@@ -433,7 +433,7 @@ class _PaginationState {
     }
 
     final knownIds = {jumpToStartId, jumpToEndId, previousId, nextId};
-    if (builder.components?.any((row) => row.components.any((element) => element is ButtonBuilder && knownIds.contains(element.customId))) == true) {
+    if (builder.components?.whereType<ActionRowBuilder>().any((row) => row.components.any((element) => element is ButtonBuilder && knownIds.contains(element.customId))) == true) {
       // We've already added controls to this builder, likely when the user navigated to this page previously.
       return;
     }
