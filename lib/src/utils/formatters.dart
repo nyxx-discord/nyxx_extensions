@@ -3,7 +3,7 @@ import 'package:nyxx/nyxx.dart';
 /// Wraps the [code] in a code block with the specified language, if any.
 String codeBlock(String code, [String language = '']) => '```$language\n$code\n```';
 
-/// Wraps the [content] inside `backticks`.
+/// Wraps the [content] inside `` ` ``.
 String inlineCode(String content) => content.contains('`') ? '``$content``' : '`$content`';
 
 /// Wraps the [content] inside `*`.
@@ -27,7 +27,7 @@ String quoteBlock(String content) => '>>> $content';
 /// Wraps the [url] inside `<>`, used to remove its embed.
 String hideEmbed(String url) => '<$url>';
 
-/// Format the [content] and the URL into a hyperlink (aka [Markdown link](https://www.markdownguide.org/basic-syntax/#links)), and optionally, add a [title] that will be displayed on hover.
+/// Format the [content] and the URL into a [hyperlink](https://www.markdownguide.org/basic-syntax/#links), and optionally, add a [title] that will be displayed on hover.
 String hyperlink(String content, String url, [String? title]) => '[$content](<$url>${title != null ? ' "$title"' : ''})';
 
 /// Wraps the [content] inside `||`.
@@ -45,6 +45,9 @@ String roleMention(Snowflake id) => '<@&$id>';
 /// Formats the [date] into a date string timestamp.
 String formatDate(DateTime date, [TimestampStyle style = TimestampStyle.none]) =>
     '<t:${date.millisecondsSinceEpoch ~/ 1000}${style == TimestampStyle.none ? '' : ':${style.style}'}>';
+
+/// Formats this [content] to use it as a footer (`-#`)
+String footer(String content) => '-# $content';
 
 enum TimestampStyle {
   none(''),
