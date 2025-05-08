@@ -93,8 +93,7 @@ String escapeItalic(String text) {
 }
 
 /// Escapes Discord-flavoured markdown in a string.
-/// By default, everything will be escaped, excluding bulleted and numbered lists, unless it's in a code block (inline or not).
-/// You can change this behaviour with [escapeCodeBlockContents] or [escapeInlineCodeContents].
+/// By default, everything will be escaped, excluding bulleted and numbered lists.
 String escapeMarkdown(
   String text, {
   Set<Escaper> escapers = const {
