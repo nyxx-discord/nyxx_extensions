@@ -97,7 +97,7 @@ String escapeItalic(String text) {
 /// You can change this behaviour with [escapeCodeBlockContents] or [escapeInlineCodeContents].
 String escapeMarkdown(
   String text, {
-  List<Escaper> escapers = const [
+  Set<Escaper> escapers = const {
     Escaper.escapes,
     Escaper.bolds,
     Escaper.codeBlocks,
@@ -109,12 +109,11 @@ String escapeMarkdown(
     Escaper.spoilers,
     Escaper.strikethroughs,
     Escaper.underlines
-  ],
+  },
 }) {
   // Escape.escapes is first here, so we dont end up escaping our own escapes, which is not what we want..
-  if (escapers.contains(Escaper.escapes) && escapers[0] != Escaper.escapes) {
-    escapers.removeWhere((e) => e == Escaper.escapes);
-    escapers = [Escaper.escapes, ...escapers];
+  if (escapers.contains(Escaper.escapes) && escapers.first != Escaper.escapes) {
+    escapers = {Escaper.escapes, ...escapers};
   }
 
   for (final escaper in escapers) {
