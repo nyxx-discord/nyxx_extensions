@@ -136,8 +136,7 @@ void main() => print('Hello');
   });
 
   group('Escape all Markdown', () {
-    test('Escape Markdown (base)', () {
-      const content = '''
+    const content = '''
 # Hey!
 This is a __huge__ chunk of `string`s to test if the ``escapeMarkdown`` can properly **escape things**.
 
@@ -166,7 +165,8 @@ Also [masked links](<https://lexedia.moe/why_everyone_put_underscores_in_their_u
 -# footer because yah
 ''';
 
-const expectedContent = r'''
+    test('Escape Markdown (base)', () {
+      const expectedContent = r'''
 \# Hey!
 This is a \_\_huge\_\_ chunk of \`string\`s to test if the \`\`escapeMarkdown\`\` can properly \*\*escape things\*\*.
 
