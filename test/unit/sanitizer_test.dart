@@ -27,7 +27,6 @@ class MockTextChannel with Mock implements TextChannel {
 }
 
 void main() {
-  print(sanitized);
   group('sanitizeContent', () {
     final channel = MockTextChannel();
 
