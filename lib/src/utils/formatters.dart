@@ -50,7 +50,7 @@ String formatDate(DateTime date, [TimestampStyle style = TimestampStyle.none]) =
 String footer(String content) => '-# $content';
 
 /// Formats this [content] to a markdown header with an optional [level].
-String header(String content, [int level = 1]) => '${'#' * level} $content';
+String header(String content, [int level = 1]) => '${'#' * (level.clamp(1, 3))} $content';
 
 enum TimestampStyle {
   none(''),
