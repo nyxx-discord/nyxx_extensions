@@ -4,7 +4,7 @@ import 'package:nyxx/nyxx.dart';
 String codeBlock(String code, [String language = '']) => '```$language\n$code\n```';
 
 /// Wraps the [content] inside `` ` ``.
-String inlineCode(String content) => content.contains('`') ? '``$content``' : '`$content`';
+String inlineCode(String content) => content.contains('`') ? '`` $content ``' : '`$content`';
 
 /// Wraps the [content] inside `*`.
 String italic(String content) => '*$content*';
@@ -48,6 +48,9 @@ String formatDate(DateTime date, [TimestampStyle style = TimestampStyle.none]) =
 
 /// Formats this [content] to use it as a footer (`-#`)
 String footer(String content) => '-# $content';
+
+/// Formats this [content] to a markdown header with an optional [level].
+String header(String content, [int level = 1]) => '${'#' * level} $content';
 
 enum TimestampStyle {
   none(''),
