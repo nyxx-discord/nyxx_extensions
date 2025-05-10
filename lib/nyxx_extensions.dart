@@ -27,6 +27,7 @@ export 'src/extensions/snowflake_entity.dart';
 export 'src/extensions/user.dart';
 
 export 'src/utils/emoji.dart';
+export 'src/utils/escapers.dart';
 export 'src/utils/endpoint_paginator.dart' hide streamPaginatedEndpoint;
 export 'src/utils/formatters.dart';
 export 'src/utils/guild_joins.dart';
