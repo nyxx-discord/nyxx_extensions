@@ -26,6 +26,10 @@ final commandMentionRegex = RegExp(
   unicode: true,
 );
 
+/// A pattern that matches url markers to hide embeds.
+final urlMarkerPattern =
+    RegExp(r'(?<!(?:https?:\/\/\S+))<(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))>');
+
 /// A type of target [sanitizeContent] can operate on.
 enum SanitizerTarget {
   /// Sanitize user mentions that match [userMentionRegex].
@@ -45,6 +49,9 @@ enum SanitizerTarget {
 
   /// Sanitize slash commands mentions that match [commandMentionRegex].
   commands,
+
+  /// Sanitize url markers that match [urlMarkerPattern].
+  urlMarkers,
 }
 
 /// An action [sanitizeContent] can take on a target.
@@ -89,6 +96,7 @@ Future<String> sanitizeContent(
         SanitizerTarget.channels => channelMentionRegex,
         SanitizerTarget.emojis => guildEmojiRegex,
         SanitizerTarget.commands => commandMentionRegex,
+        SanitizerTarget.urlMarkers => urlMarkerPattern,
       };
 
   Future<String> name(RegExpMatch match, SanitizerTarget target) async => switch (target) {
@@ -112,6 +120,7 @@ Future<String> sanitizeContent(
           },
         SanitizerTarget.emojis => match.group(2)!,
         SanitizerTarget.commands => match.namedGroup('commandName')!,
+        SanitizerTarget.urlMarkers => match.group(1)!,
       };
 
   String prefix(SanitizerTarget target) => switch (target) {
@@ -120,10 +129,12 @@ Future<String> sanitizeContent(
         SanitizerTarget.channels => '#',
         SanitizerTarget.emojis => ':',
         SanitizerTarget.commands => '/',
+        SanitizerTarget.urlMarkers => '<',
       };
 
   String suffix(SanitizerTarget target) => switch (target) {
         SanitizerTarget.emojis => ':',
+        SanitizerTarget.urlMarkers => '>',
         _ => '',
       };
 
@@ -139,6 +150,7 @@ Future<String> sanitizeContent(
             SanitizerTarget.channels => '<#$_whitespaceCharacter${match.group(1)!}>',
             SanitizerTarget.emojis => '<$_whitespaceCharacter${match.group(1) ?? ''}\\:${match.group(2)}\\:${match.group(3)}>',
             SanitizerTarget.commands => '</$_whitespaceCharacter${match.namedGroup('commandName')}:${match.group(2)}>',
+            SanitizerTarget.urlMarkers => '<<${match.group(1) ?? ''}>>',
           },
       };
 
