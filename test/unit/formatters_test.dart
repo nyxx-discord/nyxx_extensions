@@ -22,7 +22,7 @@ $testContent
       'Inline Code',
       () => expect(
         inlineCode(testContent),
-        equals('``$testContent``'),
+        equals('`` $testContent ``'),
       ),
     );
 
