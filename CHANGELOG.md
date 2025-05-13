@@ -1,3 +1,9 @@
+## 4.4.0
+__13.05.2025__
+- feature: Add escapers utilities, that allows you to escape Discord-flavored markdown.
+- feature: Add 2 new formatters `footer` and `header`.
+- feature: The sanitizer now allows you to sanitize url markers to hide embeds (`<>`)
+
 ## 4.3.2
 __22.04.2025__
 - bug: Fix pagination controls not being backward compatible with Components V2.
