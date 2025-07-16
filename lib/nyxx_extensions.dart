@@ -25,6 +25,7 @@ export 'src/extensions/role.dart';
 export 'src/extensions/scheduled_event.dart';
 export 'src/extensions/snowflake_entity.dart';
 export 'src/extensions/user.dart';
+export 'src/extensions/message_author.dart';
 
 export 'src/utils/emoji.dart';
 export 'src/utils/escapers.dart';
